@@ -21,13 +21,12 @@ const styles = {
     flexDirection : 'column',
     flex:1
   },loginButton:{
-    flexDirection :'row',
     height: 46,
     width: (width - 80),
     borderRadius: 23,
     borderColor: 'white',
     borderWidth: 1,
-    marginTop: 90,
+    marginTop: 40,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor:'transparent',
@@ -38,37 +37,70 @@ const styles = {
   }
 }
 
-
-class Register extends Component {
+class RegistDetails extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      limitTime : 0,
+      limitTime : null,
       sendBtnEnabled:true,
-      telphone : ""
+      telphone : this.props.telPhone,
+      code:""
     }
+    this.AllTime = 10;
+    this.timer = null;
     this.sendCode = this.sendCode.bind(this);
+    this.timeCutDown = this.timeCutDown.bind(this);
+    this.nextStep = this.nextStep.bind(this);
   }
 
   sendCode(){
     let phone = this.state.telphone;
-    if(phone === ""){
-      this.props.showAlert("手机号不能为空");return;
-    }
-    let reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/ //手机号码正则
-    if(!phone.match(reg)){
-      this.props.showAlert("手机号不合法");return;
-    }
     sendSMS(phone, '注册', (err, data)=>{
       if(err){
         this.props.showAlert(err);return;
       }else {
-        this.props.navigator.push({
-          ident:'registSendCode',
-          telPhone:phone
-        })
+        this.timeCutDown();
+        this.props.showAlert("发送成功")
       }
     })
+  }
+
+  componentDidMount(){
+    this.sendCode()
+  }
+  componentWillUnMount(){
+    this.timer && clearTimeout(this.timer)
+  }
+
+  timeCutDown(){
+    this.AllTime -- ;
+    if(this.AllTime <= 0){
+      this.setState({
+        limitTime : 0,
+        sendBtnEnabled : true,
+      })
+      this.AllTime = 120
+      return;
+    }
+    this.setState({
+      limitTime : this.AllTime,
+      sendBtnEnabled : false,
+    })
+    this.timer = setTimeout(()=>{
+      this.timeCutDown();
+    }, 1000);
+  }
+
+  nextStep(){
+    if(this.state.code === ""){
+      this.props.showAlert("请输入验证码")
+    }else{
+      this.props.navigator.push({
+        ident:'setpass',
+        telphone:this.state.telphone,
+        code :this.state.code
+      })
+    }
   }
 
   render(){
@@ -85,21 +117,21 @@ class Register extends Component {
           <Text></Text>
         </Header>
           <View style={styles.infoBody}>
-            <H1 style = {{color:'#fff'}}>注册</H1>
+            <H1 style = {{color:'#fff'}}>验证账号</H1>
             <CFTextInputs onChangeText = {(text) => {
-              this.setState({telphone:text})
-            }} style = {{marginTop : 60}} label = {"电话号码"} color = "#fff" maxLength = {11} keyboardType = "numeric" note = {null} placeholder = "电话号码" placeholderTextColor = "rgba(255,255,255,0.5)"/>
-
-            <Text transparent style = {styles.loginButton} onPress = {e => this.sendCode()}>下一步</Text>
+              this.setState({code:text})
+            }} style = {{marginTop : 60}} label = {"验证码"} placeholder = "验证码"
+            notePress = {this.state.limitTime === 0?this.sendCode:null}
+            note = {this.state.limitTime === 0 ? "未收到验证码?":("已发送至您的手机,"+this.state.limitTime+"秒后可在发送")}
+            placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" keyboardType = "numeric"/>
+            <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>下一步</Text>
           </View>
-
           <KeyboardSpacer />
         </Gradient>
       </View>
     )
   }
 }
-
 
 function mapStateToProps(store){
   return{
@@ -112,4 +144,4 @@ function mapDispatchToProps(dispatch){
     showAlert:(message) =>{dispatch({type:'SHOW_ALERT',message:message})}
   }
 }
-module.exports = connect(mapStateToProps,mapDispatchToProps)(Register)
+module.exports = connect(mapStateToProps,mapDispatchToProps)(RegistDetails)

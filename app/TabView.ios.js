@@ -18,7 +18,7 @@ class TabViewIOS extends Component{
   gotoProfile(){
     if(!this.props.user.login){
       this.props.navigator.push({
-        ident: 'bindPhoneNumber'
+        ident: 'welcome'
       })
     } else {
       this.props.SET_LIGHT();

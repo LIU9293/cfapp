@@ -9,7 +9,6 @@ import GlobleAlert from '../common/MessageAlert';
 import {CFTextInputs,H1,Header} from 'rn-sexless';
 import Gradient from '../common/gradientBackground';
 
-
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -21,13 +20,12 @@ const styles = {
     flexDirection : 'column',
     flex:1
   },loginButton:{
-    flexDirection :'row',
     height: 46,
     width: (width - 80),
     borderRadius: 23,
     borderColor: 'white',
     borderWidth: 1,
-    marginTop: 90,
+    marginTop: 40,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor:'transparent',
@@ -38,34 +36,36 @@ const styles = {
   }
 }
 
-
-class Register extends Component {
+class SetPassword extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      limitTime : 0,
-      sendBtnEnabled:true,
-      telphone : ""
+      pass:"",
+      passAgain:"",
+      phone : this.props.telphone,
+      code : this.props.code
     }
-    this.sendCode = this.sendCode.bind(this);
+    this.nextStep = this.nextStep.bind(this);
   }
 
-  sendCode(){
-    let phone = this.state.telphone;
-    if(phone === ""){
-      this.props.showAlert("手机号不能为空");return;
+  nextStep(){
+    let pass = this.state.pass
+    let passAgain = this.state.passAgain
+    if(pass == "" || passAgain == ""){
+      this.props.showAlert("请填写正确的密码")
+      return
     }
-    let reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/ //手机号码正则
-    if(!phone.match(reg)){
-      this.props.showAlert("手机号不合法");return;
+    if(pass !== passAgain){
+      this.props.showAlert("两次密码不一致")
+      return
     }
-    sendSMS(phone, '注册', (err, data)=>{
+    userRegister(this.state.phone,this.state.code,pass,'','',(err,data) => {
       if(err){
-        this.props.showAlert(err);return;
+        this.props.showAlert(err)
       }else {
         this.props.navigator.push({
-          ident:'registSendCode',
-          telPhone:phone
+          ident :'setuserinfo',
+          userid : data.UserId
         })
       }
     })
@@ -85,21 +85,24 @@ class Register extends Component {
           <Text></Text>
         </Header>
           <View style={styles.infoBody}>
-            <H1 style = {{color:'#fff'}}>注册</H1>
+            <H1 style = {{color:'#fff'}}>账号密码</H1>
             <CFTextInputs onChangeText = {(text) => {
-              this.setState({telphone:text})
-            }} style = {{marginTop : 60}} label = {"电话号码"} color = "#fff" maxLength = {11} keyboardType = "numeric" note = {null} placeholder = "电话号码" placeholderTextColor = "rgba(255,255,255,0.5)"/>
+              this.setState({pass:text})
+            }} style = {{marginTop : 60}} label = {"设置密码"} note = {null} placeholder = "设置密码" placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}/>
 
-            <Text transparent style = {styles.loginButton} onPress = {e => this.sendCode()}>下一步</Text>
+            <CFTextInputs onChangeText = {(text) => {
+              this.setState({passAgain:text})
+            }} style = {{marginTop : 30}} label = {"确认密码"} note = {null} placeholder = "确认密码" placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}/>
+
+            <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>下一步</Text>
+
           </View>
-
           <KeyboardSpacer />
         </Gradient>
       </View>
     )
   }
 }
-
 
 function mapStateToProps(store){
   return{
@@ -112,4 +115,4 @@ function mapDispatchToProps(dispatch){
     showAlert:(message) =>{dispatch({type:'SHOW_ALERT',message:message})}
   }
 }
-module.exports = connect(mapStateToProps,mapDispatchToProps)(Register)
+module.exports = connect(mapStateToProps,mapDispatchToProps)(SetPassword)
