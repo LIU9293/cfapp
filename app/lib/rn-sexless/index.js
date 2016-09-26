@@ -4,6 +4,7 @@
 import Header from './CFHeader';
 import Bottom from './CFBottom';
 import CFTextInputs from './CFTextInput';
+import { RoundButton } from './CFButton';
 import {
   Row,
   Container,
@@ -28,4 +29,5 @@ module.exports = {
   Hr,
   Window,
   CFTextInputs,
+  RoundButton
 }

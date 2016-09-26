@@ -1,14 +1,15 @@
 import React, { Component, } from 'react';
-import { View,Image, Text,TextInput, Navigator, TouchableOpacity, StyleSheet, Dimensions, AsyncStorage,AlertIOS } from 'react-native';
+import { View,Image, Text,TextInput, Navigator, TouchableOpacity, StyleSheet, Dimensions, AsyncStorage,AlertIOS,StatusBar,ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { userLogin, getUserActivities, getUserInfo, getMyDiscoverFilterList ,
   WXInfo,thirdLogin,bindAuthor,userRegister,bindPhoneNumber, sendSMS, secretaryMessage } from 'connection';
-import { Container, Header, Title, Button } from 'native-base';
 import { Kohana } from 'react-native-textinput-effects';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialsIcon from 'react-native-vector-icons/MaterialIcons';
-
-
+import GlobleAlert from '../common/MessageAlert';
+import Gradient from '../common/gradientBackground';
+import { Header, RoundButton, CFTextInputs, Container, Cell, H1 } from 'rn-sexless';
+import Spacer from 'react-native-keyboard-spacer';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -103,15 +104,17 @@ class BindPhoneNumbers extends Component {
     this.state = {
       limitTime : 0,
       sendBtnEnabled:true,
+      phone: null,
+      varify: null,
+      password: null,
     }
     this.AllTime = 120;
     this.sendCode = this.sendCode.bind(this);
     this.timeCutDown = this.timeCutDown.bind(this);
-    this.regist = this.regist.bind(this);
   }
 
   sendCode(){
-    let phone = this.refs.phone._lastNativeText;
+    let phone = this.state.phone;
     if(phone === undefined){
       Alert.alert("请输入手机号");return;
     }
@@ -153,9 +156,9 @@ class BindPhoneNumbers extends Component {
   }
 
   regist(){
-    let phone = this.refs.phone._lastNativeText;
-    let code = this.refs.code._lastNativeText;
-    let pass = this.refs.pass._lastNativeText;
+    let phone = this.state.phone;
+    let code = this.state.varify;
+    let pass = this.state.password;
     if(phone === undefined)
     {
         console.log("手机号不能为空");return;
@@ -172,7 +175,7 @@ class BindPhoneNumbers extends Component {
       console.log("请输入有效的密码");return;
     }
     let authorData = this.props.thirdInfo;
-    bindPhoneNumber(authorData.OpendId,authorData.NickName,authorData.Sex,authorData.Soucre,phone,pass,code,authorData.C_ID,authorData.IOS_TOKEN,(err,data) =>{
+    bindPhoneNumber(authorData.OpendId, authorData.NickName, authorData.Sex, authorData.Soucre, phone, pass, code, authorData.C_ID, authorData.IOS_TOKEN, (err,data) => {
       if(err){
         console.log(err)
       }else {
@@ -224,86 +227,60 @@ class BindPhoneNumbers extends Component {
     })
   }
 
-/*
-<View style={{flex:1}}>
-  <Image resizeMode = "cover" style = {{width : width,height : height,position :'absolute'}} source = {blurImage}/>
-  <View style ={styles.header}>
-    <TouchableOpacity onPress = {e=>{
-      this.props.navigator.pop();
-    }}>
-      <Icon name = "ios-arrow-back-outline" size = {39} style = {{marginLeft:10,color:'#fff'}}/>
-    </TouchableOpacity>
-    <Text style = {styles.center}>账号绑定</Text>
-  </View>
-
-  <Image resizeMode = "contain" style = {{width : width ,marginTop:30 }} source = {logoImage}/>
-
-  <View style = {styles.infoBody}>
-    <TextInput ref = "phone" keyboardType = "numeric" placeholder = "手机号" maxLength = {11} style = {styles.textInput} placeholderTextColor ='#fff'/>
-    <Text style = {styles.line}></Text>
-
-    <View style = {{flexDirection : 'row',justifyContent:'space-between'}}>
-      <TextInput placeholder = "验证码" ref = "code" keyboardType = "numeric" maxLength = {6} style = {styles.code} placeholderTextColor ='#fff'/>
-      <Button disabled = {!this.state.sendBtnEnabled} style = {styles.sendCode} onPress = {e=>{
-        this.sendCode()
-      }}>{this.state.limitTime === 0 ?"获取验证码" : this.state.limitTime+" S"}</Button>
-    </View>
-
-    <Text style = {styles.line}></Text>
-    <TextInput placeholder = "密码" ref = "pass" secureTextEntry = {true} style = {styles.textInput} placeholderTextColor ='#fff'/>
-    <Text style = {styles.line}></Text>
-    <Button style = {{width : (width - 60),backgroundColor :'#2db7f5',marginTop : 20}} onPress = {e=>{
-      this.regist()
-    }}>立即绑定</Button>
-  </View>
-</View>
-*/
-
   render(){
     return(
-
-      <View style={{flex:1,backgroundColor:'#fff'}}>
-        <GlobleAlert />
-        <StatusBar barStyle="default"/>
-        <Container>
-          <Header style={{backgroundColor: '#fff'}}>
-            <Button transparent onPress={e=>{this.props.navigator.pop()}}>
-                <Icon name='ios-arrow-back' style={{color: '#333'}} size={26} />
-            </Button>
+      <View style={{flex:1}}>
+        <Gradient>
+          <Header style={{backgroundColor: 'transparent'}}>
+            <TouchableOpacity onPress={e=>this.props.navigator.pop()}>
+              <Icon name="ios-arrow-back" style={{color: 'white'}} size={22} />
+            </TouchableOpacity>
+            <View />
+            <View />
           </Header>
-          <GlobleAlert AlertMessage = {this.state.err}/>
-          <Content style = {{backgroundColor:'#fff'}}>
-            <ScrollView style={{marginTop: 20}}>
-            <View style = {styles.infoBody}>
-              <TextInput ref = "phone" keyboardType = "numeric" placeholder = "手机号" maxLength = {11} style = {styles.textInput} placeholderTextColor ='#fff'/>
-              <Text style = {styles.line}></Text>
-
-              <View style = {{flexDirection : 'row',justifyContent:'space-between'}}>
-                <TextInput placeholder = "验证码" ref = "code" keyboardType = "numeric" maxLength = {6} style = {styles.code} placeholderTextColor ='#fff'/>
-                <Button disabled = {!this.state.sendBtnEnabled} style = {styles.sendCode} onPress = {e=>{
-                  this.sendCode()
-                }}>{this.state.limitTime === 0 ?"获取验证码" : this.state.limitTime+" S"}</Button>
-              </View>
-
-              <Text style = {styles.line}></Text>
-              <TextInput placeholder = "密码" ref = "pass" secureTextEntry = {true} style = {styles.textInput} placeholderTextColor ='#fff'/>
-              <Text style = {styles.line}></Text>
-              <Button style = {{width : (width - 60),backgroundColor :'#2db7f5',marginTop : 20}} onPress = {e=>{
-                this.regist()
-              }}>立即绑定</Button>
-            </View>
-            </ScrollView>
-          </Content>
-        </Container>
+          <Container style={{paddingHorizontal: 40, flex: 1}}>
+            <H1 style = {{color:'#fff', marginTop: 20}}>绑定手机</H1>
+            <CFTextInputs
+              textStyle = {{color: 'white'}}
+              style = {{marginTop: 30}}
+              label = "电话号码"
+              placeholder = ""
+              placeholderTextColor = "rgba(255,255,255,0.5)"
+              keyboardType = "numeric"
+              note = {this.state.sendBtnEnabled ? '发送验证码' : '请等待' + this.state.limitTime + '秒后再发送'}
+              notePress = { e => this.sendCode() }
+              onChange={e => {this.setState({phone: e.nativeEvent.text})}}
+            />
+            <CFTextInputs
+              textStyle = {{color: 'white'}}
+              style = {{marginTop: 30, width: 100}}
+              label = "验证码"
+              placeholder = ""
+              placeholderTextColor = "rgba(255,255,255,0.5)"
+              keyboardType = "numeric"
+              onChange={e => {this.setState({varify: e.nativeEvent.text})}}
+            />
+            <CFTextInputs
+              textStyle = {{color: 'white'}}
+              style = {{marginTop: 30}}
+              label = "密码"
+              placeholder = ""
+              returnKeyType = "go"
+              autoCorrect = {false}
+              secureTextEntry = {true}
+              placeholderTextColor = "rgba(255,255,255,0.5)"
+              onChange={e => {this.setState({password: e.nativeEvent.text})}}
+            />
+            <RoundButton
+              style={{position: 'absolute', bottom: 30}}
+              onPress={e => this.regist.bind(this)}
+            >
+              绑定
+            </RoundButton>
+          </Container>
+          <Spacer />
+        </Gradient>
       </View>
-
-
-
-
-
-
-
-
 
     )
   }
@@ -319,8 +296,6 @@ function mapDispatchToProps(dispatch){
   return{
     login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})} ,
     baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
-    startLoading: () => {dispatch({type:'START_LOADING'})},
-    stopLoading: () => {dispatch({type:'STOP_LOADING'})},
     update_user_topic: (data) => {dispatch({type: "UPDATE_SELECTED_TOPICS",data: data})},
     update_messages: (data) => {dispatch({type:'UPDATE_SECRETARY_MESSAGE', data: data})},
   }
