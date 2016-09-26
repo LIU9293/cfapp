@@ -20,6 +20,9 @@ import ForgetPassWord from './view/profile/forgetPassWord';
 import ReBindPhoneNumbers from './view/profile/ReBindPhoneNumber';
 import ModifyPassword from './view/profile/modifyPassword';
 import Welcome from './view/profile/welcome';
+import RegistDetails from './view/profile/RegistDetail';
+import SetPassword from './view/profile/setPassWord';
+import SetUserInfo from './view/profile/setUserInfo';
 
 class Route extends Component{
 
@@ -66,6 +69,12 @@ class Route extends Component{
         return <ModifyPassword navigator = { navigator } />
       case 'welcome':
         return <Welcome navigator = { navigator } />
+      case 'registSendCode': //注册页面发送验证码后跳转的页面
+        return <RegistDetails navigator = {navigator} telPhone = {route.telPhone}/>
+      case 'setpass'://设置密码
+        return <SetPassword navigator = {navigator} telphone = {route.telphone} code = {route.code}/>
+      case 'setuserinfo':
+        return <SetUserInfo navigator = { navigator } userid = {route.userid}/>
       default:
         return <TabView navigator = { navigator } />
     }
