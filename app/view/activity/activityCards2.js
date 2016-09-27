@@ -42,6 +42,7 @@ class ActivityCards extends Component {
             style={{flex:1}}
             key={ii}
             horizontal={false}
+            showsVerticalScrollIndicator={false}
           >
             <TouchableOpacity key={ii} onPress={e=>{
                 this.props.navigator.push({

@@ -64,8 +64,8 @@ class FilterScreen extends Component{
       return(
         <NotLoginPage navigator={this.props.navigator}>
           <RoundButton
-            style={{borderColor: '#0062fb',marginTop:10}}
-            textStyle={{color: '#0062fb'}}
+            style={{borderColor: '#0098fe',marginTop:0, width: 240, height: 40}}
+            textStyle={{color: '#0098fe'}}
             onPress={e => this.props.navigator.pop()}
           >
             回主页

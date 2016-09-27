@@ -325,7 +325,7 @@ class CommentList extends Component {
             onSubmitEditing = { e => {this.addComments()} }
           />
           <TouchableOpacity onPress = {e=>{this.addComments()}}>
-            <Text style={{color: '#373EA4'}}>发布</Text>
+            <Text style={{color: '#0098fe'}}>发布</Text>
           </TouchableOpacity>
         </Bottom>
         <KeyboardSpacer />

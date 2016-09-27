@@ -37,7 +37,7 @@ class TabViewIOS extends Component{
           barStyle={this.props.StatusBarStyleIOS}
         />
         <TabBarIOS
-          tintColor="steelblue"
+          tintColor="#0098fe"
           translucent={false} >
           <TabBarIOS.Item
             selected={this.state.tab =="FAXIAN"}

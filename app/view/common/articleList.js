@@ -4,8 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, TouchableW
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Container, P, H2, Cell } from 'rn-sexless';
 const window = Dimensions.get('window');
-const textColor = 'steelblue';
-
+const textColor = '#0098fe';
 
 class ArticleList extends Component{
   constructor(props){

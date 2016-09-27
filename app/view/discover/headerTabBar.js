@@ -28,9 +28,9 @@ const DefaultTabBar = React.createClass({
 
   getDefaultProps() {
     return {
-      activeTextColor: 'steelblue',
+      activeTextColor: '#0098fe',
       inactiveTextColor: 'black',
-      underlineColor: 'steelblue',
+      underlineColor: '#0098fe',
       backgroundColor: null,
       underlineHeight: 2,
     };

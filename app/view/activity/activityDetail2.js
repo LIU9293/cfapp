@@ -59,7 +59,7 @@ class ActivityDetail extends Component{
       })
     } else {
       this.props.navigator.push({
-        ident: 'login',
+        ident: 'welcome',
       })
     }
   }
@@ -141,7 +141,7 @@ class ActivityDetail extends Component{
             </MapView>*/}
           </ScrollView>
           <TouchableOpacity style={[styles.Bottom,{
-              backgroundColor: (this.state.canJoin ? 'steelblue' : '#ddd'),
+              backgroundColor: (this.state.canJoin ? '#0098fe' : '#ddd'),
             }]} onPress={this.joinActivity} disabled={!this.state.canJoin} >
             <Text style={{color:'#fff', fontSize:16, fontWeight: 'bold'}}>{this.state.status}</Text>
           </TouchableOpacity>

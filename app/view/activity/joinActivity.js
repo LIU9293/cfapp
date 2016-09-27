@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: window.width,
     height: 50,
-    backgroundColor: 'steelblue',
+    backgroundColor: '#0098fe',
     alignItems: 'center',
     justifyContent: 'center',
   },
