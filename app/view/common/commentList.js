@@ -183,7 +183,7 @@ class CommentList extends Component {
 
   //添加评论
   addComments(){
-    if(this.props.userinfo.userid === undefined){
+    if(this.props.userinfo.userid === undefined || this.props.userinfo.userid === null){
       this.props.navigator.push({
         ident: 'login'
       })
