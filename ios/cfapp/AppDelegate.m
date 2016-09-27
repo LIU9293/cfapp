@@ -8,6 +8,7 @@
  */
 
 #import "AppDelegate.h"
+#import "CodePush.h"
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
@@ -20,7 +21,12 @@
 {
   NSURL *jsCodeLocation;
 
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+  
+#ifdef DEBUG
+    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+#else
+    jsCodeLocation = [CodePush bundleURL];
+#endif
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"cfapp"
@@ -32,6 +38,9 @@
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
+  
+  [NSThread sleepForTimeInterval:1];
+  
   [self.window makeKeyAndVisible];
   return YES;
 }

@@ -10,6 +10,7 @@
     "native-base": "^0.5.7",
     "react": "15.3.2",
     "react-native": "0.33.0",
+    "react-native-code-push": "^1.14.6-beta",
     "react-native-image-picker": "^0.22.7",
     "react-native-keyboard-spacer": "^0.3.0",
     "react-native-linear-gradient": "^1.5.13",
