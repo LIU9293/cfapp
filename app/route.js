@@ -1,5 +1,5 @@
 import React, { Component, } from 'react';
-import { Navigator } from 'react-native';
+import { Navigator, NetInfo, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import TabView from './TabView';
 import Login from './view/profile/login';
@@ -23,15 +23,71 @@ import Welcome from './view/profile/welcome';
 import RegistDetails from './view/profile/RegistDetail';
 import SetPassword from './view/profile/setPassWord';
 import SetUserInfo from './view/profile/setUserInfo';
+import Disconnect from './view/common/BadNetwork';
 
 class Route extends Component{
 
   constructor(props){
     super(props);
-    this.renderScene = this.renderScene.bind(this)
+    this.renderScene = this.renderScene.bind(this);
+    this.handleNetWorkChange = this.handleNetWorkChange.bind(this);
+    this.state = {
+      reconnected: false
+    };
+    this.previousRoute = null;
+  }
+
+  componentDidMount(){
+    NetInfo.addEventListener(
+        'change',
+        this.handleNetWorkChange
+    );
+    setTimeout(()=>{
+      NetInfo.isConnected.fetch().then(isConnected => {
+        if(!isConnected){
+          Alert.alert('请检查网络连接～')
+          this.previousRoute = {}
+        }
+      });
+    },1000)
+  }
+
+  //每次网络变化的时候，更新到redux store，如果之前有记录下路由并有信号，则认为是重新连接上
+  handleNetWorkChange(info){
+    console.log(info);
+    if(info == 'none' || info == 'NONE' || info == 'unknown' || info == 'UNKNOWN'){
+      this.props.changeNetwork(false);
+    } else{
+      this.props.changeNetwork(true);
+      if(this.previousRoute){
+        this.setState({
+          reconnected: true
+        })
+      }
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    console.log(nextProps, nextState);
+    if(nextProps.network == false){
+      return false
+    } else {
+      return true
+    }
   }
 
   renderScene(route, navigator){
+    //在render之前，如果没有信号，则改变路由
+    if(!this.props.network){
+      this.previousRoute = {...route};
+      route.ident = 'disconnect';
+    } else if(this.state.reconnected){
+      //如果重新连接，替换之前的路由为现在的路由，并重置navigator stack
+      route = {...this.previousRoute};
+      navigator.immediatelyResetRouteStack([{},route])
+      this.previousRoute = null;
+      this.setState({reconnected: false})
+    }
     switch (route.ident){
       case 'login':
         return <Login navigator = { navigator } />;
@@ -75,6 +131,8 @@ class Route extends Component{
         return <SetPassword navigator = {navigator} telphone = {route.telphone} code = {route.code}/>
       case 'setuserinfo':
         return <SetUserInfo navigator = { navigator } userid = {route.userid}/>
+      case 'disconnect':
+        return <Disconnect navigator = { navigator } />
       default:
         return <TabView navigator = { navigator } />
     }
@@ -93,4 +151,15 @@ class Route extends Component{
 
 }
 
-module.exports = Route
+function mapStateToProps(store){
+  return{
+    network: store.network
+  }
+}
+function mapDispatchToProps(dispatch){
+  return{
+    changeNetwork: (status) => {dispatch({type: 'SET_NETWORK_STATUS', status: status})}
+  }
+}
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Route)

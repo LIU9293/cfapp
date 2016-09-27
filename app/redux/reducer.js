@@ -456,6 +456,16 @@ function allActivityData ( state = [], action){
   }
 }
 
+function network ( state = true, action ){
+  switch (action.type) {
+    case 'SET_NETWORK_STATUS':
+      return action.status
+      break;
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   user,
   dianzan,
@@ -478,5 +488,6 @@ export default combineReducers({
   topics,
   StatusBarStyleIOS,
   allActivityData,
-  GlobleAlert
+  GlobleAlert,
+  network
 })
