@@ -3,7 +3,7 @@ import {View,Text,ScrollView,RefreshControl,TouchableOpacity,Dimensions,Image,Te
 import { connect } from 'react-redux';
 import { Container, Header, Button, Content, Title } from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { sendSMS,reBindPhoneNumber} from 'connection';
+import { sendSMS,reBindPhoneNumber,getUserInfo,getUserActivities,getMyDiscoverFilterList,secretaryMessage} from 'connection';
 import GlobleAlert from '../common/MessageAlert';
 
 const width = Dimensions.get('window').width;
@@ -183,44 +183,55 @@ class ReBindPhoneNumbers extends Component {
       if(err){
         this.props.showAlert(err)
       }else {
-        this.props.login(this.props.user.userid,{...this.props.user.userdata,phone: phone})
+        let userid = this.props.user.userid
+        getUserInfo(userid, (err4,data4) => {
+          if(err4){
+            console.log("err4",err4);
+          } else {
+            let userData = {
+              avatar: data4.ZUT_HEADIMG,
+              nickName: data4.ZUT_NICKNAME,
+              phone: data4.ZUT_PHONE,
+              userDesc : data.UserDes,
+              wechat: data.IsBindWeChat,
+              qq: data.IsBindQQ,
+              linkedin: data.IsBindLinkedIn,
+            }
+            this.props.login(userid, userData);
+          }
+        });
+        getUserActivities(userid, (err,data) => {
+          if(err){console.log(err)} else {
+            data.UserActivityList.map((item,ii)=>{
+              this.props.baoming(item.ZET_ID)
+            })
+          }
+        })
+        getMyDiscoverFilterList(userid, (err, data) => {
+          if(err){console.log(err)} else {
+            let select = {};
+            data.ChannelList.map((item, ii)=>{
+              select[item.ChannelID] = item.ChannelName
+            })
+            this.props.update_user_topic(select);
+          }
+        })
+        secretaryMessage(userid, 'No', (err,data)=>{
+          if(err){
+            console.log(err);
+          } else {
+            if(data.List.length > 0){
+              AsyncStorage.setItem('Messages', JSON.stringify(this.props.messages.concat(data.List)))
+                .catch(err => console.log(err))
+                .done()
+              this.props.update_messages(this.props.messages.concat(data.List));
+            }
+          }
+        })
         this.props.navigator.pop()
       }
     })
   }
-
-  /*
-  <View style={{flex:1}}>
-    <GlobleAlert />
-    <Image resizeMode = "cover" style = {{width : width,height : height,position :'absolute'}} source = {blurImage}/>
-    <View style ={styles.header}>
-      <TouchableOpacity onPress = {e=>{
-        this.props.navigator.pop();
-      }}>
-        <Icon name = "ios-arrow-back-outline" size = {39} style = {{marginLeft:10,color:'#fff'}}/>
-      </TouchableOpacity>
-      <Text style = {styles.center}>更换手机号</Text>
-    </View>
-
-    <Image resizeMode = "contain" style = {{width : width ,marginTop:30 }} source = {logoImage}/>
-
-    <View style = {styles.infoBody}>
-      <TextInput ref = "phone" keyboardType = "numeric" placeholder = "手机号" maxLength = {11} style = {styles.textInput} placeholderTextColor ='#fff'/>
-      <Text style = {styles.line}></Text>
-
-      <View style = {{flexDirection : 'row',justifyContent:'space-between'}}>
-        <TextInput placeholder = "验证码" ref = "code" keyboardType = "numeric" maxLength = {6} style = {styles.code} placeholderTextColor ='#fff'/>
-        <Button disabled = {!this.state.sendBtnEnabled} style = {styles.sendCode} onPress = {e=>{
-          this.sendCode()
-        }}>{this.state.limitTime === 0 ?"获取验证码" : this.state.limitTime+" S"}</Button>
-      </View>
-      <Text style = {styles.line}></Text>
-      <Button style = {{width : (width - 60),backgroundColor :'#2db7f5',marginTop : 20}} onPress = {e=>{
-        this.BindLimit()
-      }}>立即绑定</Button>
-    </View>
-  </View>
-  */
 
   render(){
     return(
@@ -272,13 +283,6 @@ class ReBindPhoneNumbers extends Component {
           </Content>
         </Container>
       </View>
-
-
-
-
-
-
-
     )
   }
 }
@@ -292,7 +296,10 @@ function mapStateToProps(store){
 function mapDispatchToProps(dispatch){
   return{
     showAlert:(message) =>{dispatch({type:'SHOW_ALERT',message:message})},
-    login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})}
+    login: (userid,data) => {dispatch({type:'LOG_IN', userid:userid, userdata:data})} ,
+    baoming: (id) => {dispatch({type:'JOIN_ACTIVITY', id: id})} ,
+    update_user_topic: (data) => {dispatch({type: "UPDATE_SELECTED_TOPICS",data: data})},
+    update_messages: (data) => {dispatch({type:'UPDATE_SECRETARY_MESSAGE', data: data})},
   }
 }
 module.exports = connect(mapStateToProps,mapDispatchToProps)(ReBindPhoneNumbers)
