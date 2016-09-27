@@ -16,10 +16,11 @@ const height = Dimensions.get('window').height;
 const styles = {
   infoBody:{
     width: width,
-    paddingHorizontal:40,
+    // paddingHorizontal:40,
     marginTop:30,
     flexDirection : 'column',
-    flex:1
+    flex:1,
+    width: (width - 80)
   },loginButton:{
     height: 46,
     width: (width - 80),
@@ -116,16 +117,20 @@ class RegistDetails extends Component {
           <Title></Title>
           <Text></Text>
         </Header>
-          <View style={styles.infoBody}>
-            <H1 style = {{color:'#fff'}}>验证账号</H1>
-            <CFTextInputs onChangeText = {(text) => {
-              this.setState({code:text})
-            }} style = {{marginTop : 60}} label = {"验证码"} placeholder = "验证码"
-            notePress = {this.state.limitTime === 0?this.sendCode:null}
-            note = {this.state.limitTime === 0 ? "未收到验证码?":("已发送至您的手机,"+this.state.limitTime+"秒后可在发送")}
-            placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" keyboardType = "numeric"/>
-            <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>下一步</Text>
-          </View>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Container style={{paddingHorizontal: 40, flex: 1}}>
+              <View style={styles.infoBody}>
+                <H1 style = {{color:'#fff'}}>验证账号</H1>
+                <CFTextInputs onChangeText = {(text) => {
+                  this.setState({code:text})
+                }} style = {{marginTop : 60}} label = {"验证码"} placeholder = "验证码"
+                notePress = {this.state.limitTime === 0?this.sendCode:null}
+                note = {this.state.limitTime === 0 ? "未收到验证码?":("已发送至您的手机,"+this.state.limitTime+"秒后可在发送")}
+                placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" keyboardType = "numeric"/>
+                <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>下一步</Text>
+              </View>
+            </Container>
+          </ScrollView>
           <KeyboardSpacer />
         </Gradient>
       </View>

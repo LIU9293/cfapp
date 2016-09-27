@@ -16,10 +16,11 @@ const height = Dimensions.get('window').height;
 const styles = {
   infoBody:{
     width: width,
-    paddingHorizontal:40,
+    // paddingHorizontal:40,
     marginTop:30,
     flexDirection : 'column',
-    flex:1
+    flex:1,
+    width: (width - 80)
   },loginButton:{
     height: 46,
     width: (width - 80),
@@ -111,22 +112,27 @@ class SetUserInfo extends Component {
         <GlobleAlert />
         <StatusBar barStyle="default"/>
         <Gradient>
-        <Header style = {{backgroundColor:'transparent'}}>
-          <Button transparent onPress={e=>{this.props.navigator.pop()}}>
-              <Icon name='ios-arrow-back' style={{color: '#fff'}} size={26} />
-          </Button>
-          <Title></Title>
-          <Text></Text>
-        </Header>
-          <View style={styles.infoBody}>
-            <H1 style = {{color:'#fff'}}>完成注册</H1>
-            <CFTextInputs onChangeText = {(text) => {
-              this.setState({username:text})
-            }} style = {{marginTop : 90}} label = {"昵称"} note = {null} placeholder = "昵称" placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff"/>
+          <Header style = {{backgroundColor:'transparent'}}>
+            <Button transparent onPress={e=>{this.props.navigator.pop()}}>
+                <Icon name='ios-arrow-back' style={{color: '#fff'}} size={26} />
+            </Button>
+            <Title></Title>
+            <Text></Text>
+          </Header>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Container style={{paddingHorizontal: 40, flex: 1}}>
+              <View style={styles.infoBody}>
+                <H1 style = {{color:'#fff'}}>完成注册</H1>
+                <CFTextInputs onChangeText = {(text) => {
+                  this.setState({username:text})
+                }} style = {{marginTop : 90}} label = {"昵称"} note = {null} placeholder = "昵称"
+                placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff"
+                onSubmitEditing = {e =>{this.nextStep()}}/>
+                <Text style = {styles.loginButton} onPress = {e => {this.nextStep()}}>完成注册</Text>
+              </View>
+              </Container>
+            </ScrollView>
 
-            <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>完成注册</Text>
-
-          </View>
           <KeyboardSpacer />
         </Gradient>
       </View>

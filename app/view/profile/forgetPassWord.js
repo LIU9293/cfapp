@@ -276,7 +276,8 @@ class ForgetPassWord extends Component {
                     placeholder = "新密码"
                     placeholderTextColor ='#aaa'
                     secureTextEntry = {true}
-                    style={newStyles.textInput} />
+                    style={newStyles.textInput}
+                    onSubmitEditing = {e =>{this.resetPass()}} />
                 </View>
                 <View style = {newStyles.border}></View>
                 <Button style = {{width : (width - 40),backgroundColor :'#ddd',marginTop : 150,marginHorizontal : 20}} textStyle = {{color:'#fff'}} onPress = {e=>{
@@ -290,6 +291,12 @@ class ForgetPassWord extends Component {
     )
   }
 }
+
+/*
+<Button textStyle = {{color:'#fff',fontSize:17}} style = {{width : (width - 40),backgroundColor :'#0867f7',marginTop : 70,marginHorizontal : 20,borderRadius:20,paddingVertical:10,}} onPress = {e=>{
+  this.resetPass()
+}}>重置密码</Button>
+*/
 function mapStateToProps(store){
   return{
     user: store.user
