@@ -16,10 +16,11 @@ const height = Dimensions.get('window').height;
 const styles = {
   infoBody:{
     width: width,
-    paddingHorizontal:40,
+    // paddingHorizontal:40,
     marginTop:30,
     flexDirection : 'column',
-    flex:1
+    flex:1,
+    width: (width - 80)
   },loginButton:{
     flexDirection :'row',
     height: 46,
@@ -79,22 +80,25 @@ class Register extends Component {
         <GlobleAlert />
         <StatusBar barStyle="default"/>
         <Gradient>
-        <Header style = {{backgroundColor:'transparent'}}>
-          <Button transparent onPress={e=>{this.props.navigator.pop()}}>
-              <Icon name='ios-arrow-back' style={{color: '#fff'}} size={26} />
-          </Button>
-          <Title></Title>
-          <Text></Text>
-        </Header>
-          <View style={styles.infoBody}>
-            <H1 style = {{color:'#fff'}}>注册</H1>
-            <CFTextInputs onChangeText = {(text) => {
-              this.setState({telphone:text})
-            }} style = {{marginTop : 60}} label = {"电话号码"} color = "#fff" maxLength = {11} keyboardType = "numeric" note = {null} placeholder = "电话号码" placeholderTextColor = "rgba(255,255,255,0.5)"
-            onSubmitEditing = {e =>{this.sendCode()}}/>
-            <Text transparent style = {styles.loginButton} onPress = {e => {this.state.btnEnabled ? this.sendCode(): null}}>下一步</Text>
-          </View>
-
+            <Header style = {{backgroundColor:'transparent'}}>
+              <Button transparent onPress={e=>{this.props.navigator.pop()}}>
+                  <Icon name='ios-arrow-back' style={{color: '#fff'}} size={26} />
+              </Button>
+              <Title></Title>
+              <Text></Text>
+            </Header>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Container style={{paddingHorizontal: 40, flex: 1}}>
+                <View style={styles.infoBody}>
+                  <H1 style = {{color:'#fff', marginTop: 15}}>注册</H1>
+                  <CFTextInputs onChangeText = {(text) => {
+                    this.setState({telphone:text})
+                  }} style = {{marginTop : 60}} label = {"电话号码"} color = "#fff" maxLength = {11} keyboardType = "numeric" note = {null} placeholder = "电话号码" placeholderTextColor = "rgba(255,255,255,0.5)"
+                  onSubmitEditing = {e =>{this.sendCode()}}/>
+                  <Text transparent style = {styles.loginButton} onPress = {e => {this.state.btnEnabled ? this.sendCode(): null}}>下一步</Text>
+                </View>
+              </Container>
+            </ScrollView>
           <KeyboardSpacer />
         </Gradient>
       </View>
