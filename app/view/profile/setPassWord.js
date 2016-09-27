@@ -15,10 +15,11 @@ const height = Dimensions.get('window').height;
 const styles = {
   infoBody:{
     width: width,
-    paddingHorizontal:40,
+    // paddingHorizontal:40,
     marginTop:30,
     flexDirection : 'column',
-    flex:1
+    flex:1,
+    width: (width - 80)
   },loginButton:{
     height: 46,
     width: (width - 80),
@@ -84,20 +85,24 @@ class SetPassword extends Component {
           <Title></Title>
           <Text></Text>
         </Header>
-          <View style={styles.infoBody}>
-            <H1 style = {{color:'#fff'}}>账号密码</H1>
-            <CFTextInputs onChangeText = {(text) => {
-              this.setState({pass:text})
-            }} style = {{marginTop : 60}} label = {"设置密码"} note = {null} placeholder = "设置密码" placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}/>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Container style={{paddingHorizontal: 40, flex: 1}}>
+            <View style={styles.infoBody}>
+              <H1 style = {{color:'#fff'}}>账号密码</H1>
+              <CFTextInputs onChangeText = {(text) => {
+                this.setState({pass:text})
+              }} style = {{marginTop : 60}} label = {"设置密码"} note = {null} placeholder = "设置密码" placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}/>
 
-            <CFTextInputs onChangeText = {(text) => {
-              this.setState({passAgain:text})
-            }} style = {{marginTop : 30}} label = {"确认密码"} note = {null} placeholder = "确认密码"
-            placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}
-            onSubmitEditing = {e =>{this.nextStep()}}/>
-            <Text style = {styles.loginButton} onPress = {e => {this.nextStep()}}>下一步</Text>
+              <CFTextInputs onChangeText = {(text) => {
+                this.setState({passAgain:text})
+              }} style = {{marginTop : 30}} label = {"确认密码"} note = {null} placeholder = "确认密码"
+              placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}
+              onSubmitEditing = {e =>{this.nextStep()}}/>
+              <Text style = {styles.loginButton} onPress = {e => {this.nextStep()}}>下一步</Text>
+            </View>
+            </Container>
+          </ScrollView>
 
-          </View>
           <KeyboardSpacer />
         </Gradient>
       </View>

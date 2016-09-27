@@ -234,6 +234,7 @@ class CommentList extends Component {
                       fatherName:this.props.commentReq.fatherName
                     },this.props.objid)
                   }
+                  this.props.addCommentOperate("","",this.props.objid,"","")
                 }
             })
           }else if(type === 2){
@@ -278,6 +279,7 @@ class CommentList extends Component {
                       fatherName:this.props.commentReq.fatherName
                     },this.props.objid)
                   }
+                  this.props.addCommentOperate("","",this.props.objid,"","")
                 }
               })
           }
@@ -351,6 +353,7 @@ function mapDispatchToProps(dispatch){
     insertSecondLevelComment: (ID,commentData,postID) => {dispatch({type:'INSERT_SECOND_LEVEL_COMMENT', commentData: commentData, ID:ID, postID: postID})},
     DELETE_TOP_COMMENT:(postID,commentid)=>{dispatch({type:'DELETE_TOP_COMMENT',postID:postID,commentid:commentid})},
     DELETE_SECOND_COMMENT:(postID,commentid)=>{dispatch({type:'DELETE_SECOND_COMMENT',postID:postID,commentid:commentid})},
+    addCommentOperate:(userName,objFatherid,objid,fatherName,comment)=>{dispatch({type:"UPDATE_QUEPARAM",userName:userName,objFatherid:objFatherid,objid:objid,fatherName:fatherName,comment:comment})},
   }
 }
 
