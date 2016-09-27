@@ -232,7 +232,7 @@ class TwitterUser extends Component{
                 {arr}
               </Container>
             </ScrollView>
-            <Header style={{position: 'absolute', bottom: 0, backgroundColor: '#0098fe', height: 44, paddingTop: 0, width: Util.size.width}}>
+            <Header style={{position: 'absolute', bottom: 0, backgroundColor: '#0086fd', height: 44, paddingTop: 0, width: Util.size.width}}>
               <TouchableOpacity onPress={ e => this.props.navigator.pop() }>
                 <Icon name="ios-arrow-back" size={18} color="white" />
               </TouchableOpacity>

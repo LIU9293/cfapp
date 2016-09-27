@@ -10,8 +10,8 @@ class NotLoginPage extends Component{
       <Cell style={{backgroundColor: '#fff'}}>
         <Image source={notLogin} resizeMode="contain" style={{width: 300}} />
         <RoundButton
-          style={{borderColor: '#0098fe',marginTop:30, width: 240, height: 40}}
-          textStyle={{color: '#0098fe'}}
+          style={{borderColor: '#0086fd',marginTop:30, width: 240, height: 40}}
+          textStyle={{color: '#0086fd'}}
           onPress={e => this.props.navigator.push({ident:'welcome'})}
         >
           去登录

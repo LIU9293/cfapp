@@ -27,7 +27,7 @@ class Profile extends Component{
     if(this.props.user.login){
       return(
         <View style={{ flex: 1, marginBottom: 50, }}>
-          <Header style={{backgroundColor: '#1F415C', paddingTop: 20}}>
+          <Header style={{backgroundColor: '#0086fd', paddingTop: 20}}>
             <Button transparent>
               <Text></Text>
             </Button>

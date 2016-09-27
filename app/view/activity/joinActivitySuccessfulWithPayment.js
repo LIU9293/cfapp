@@ -15,7 +15,7 @@ class JoinActivitySuccessfulWithPayment extends Component{
           animated={true}
           barStyle={'light-content'}
         />
-      <Header style={{backgroundColor:'#0098fe'}}>
+      <Header style={{backgroundColor:'#0086fd'}}>
           <Title numberOfLines={1} style={{maxWidth: 280, color: '#fff', marginTop: 6,}}>{'报名成功'}</Title>
         </Header>
         <ScrollView style={styles.wapper}>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: window.width,
     height: 40,
-    backgroundColor: '#0098fe',
+    backgroundColor: '#0086fd',
     alignItems: 'center',
     justifyContent: 'center',
   },
