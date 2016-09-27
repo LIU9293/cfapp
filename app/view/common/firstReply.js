@@ -55,12 +55,7 @@ class FirstReply extends Component {
     console.log(item)
     return(
       <View style = {styles.FatherView}>
-        <TouchableOpacity onPress = {e=>{
-          this.props.navigator.push({
-            ident: 'usercenter',
-            userid: item.UserID
-          })
-        }}>
+        <TouchableOpacity>
           <Image source = {{uri:item.HeadImg}} style = {styles.headImg}/>
         </TouchableOpacity>
         <TouchableOpacity style = {styles.center} onPress = {e=>{

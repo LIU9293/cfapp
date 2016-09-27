@@ -57,7 +57,7 @@ class CommentSharZan extends Component{
     return(
       <Bottom style={{borderTopWidth: 1, borderTopColor: '#eee'}}>
         <View style={{width: 80, height: 80, marginLeft: -30, marginBottom: -10, flexDirection:'row'}}>
-          <Heart like={this.like} unlike={this.like} liked={liked} />
+          <Heart like={this.like} unlike={this.like} liked={liked} disabled={this.props.user.login ? false : true} />
           <Text style={{position:'absolute', top: 23, right: 17, color: '#a9b8c2', fontSize: 18}}>{this.props.dianzan[this.props.objid].num}</Text>
         </View>
         <TouchableOpacity onPress = {
@@ -73,7 +73,7 @@ class CommentSharZan extends Component{
         </TouchableOpacity>
         <View style={{width: 80, height: 80, marginRight: -40, marginBottom: -10}}>
           <Text style={{position:'absolute', top: 23, left: 10, color: '#a9b8c2', fontSize: 18}}>{this.props.collects[this.props.objid].num}</Text>
-          <Star star={this.collect} unstar={this.collect} collected={collected} />
+          <Star star={this.collect} unstar={this.collect} collected={collected} disabled={this.props.user.login ? false : true} />
         </View>
       </Bottom>
     )

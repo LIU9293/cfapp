@@ -8,7 +8,7 @@ class CFTextInputs extends Component {
   render(){
     const { style, textStyle, label, note, notePress, noteStyle } = this.props;
     return(
-      <View style = {[styles.coverView,style]}>
+      <View style = {[styles.coverView, style]}>
         <Text style = {styles.title}>{label}</Text>
         <TextInput {...this.props} style={[styles.textinput, textStyle]} />
         <View style = {styles.line}></View>
@@ -25,17 +25,17 @@ const styles = {
     color:'#fff',
     fontSize:14,
   },textinput:{
-    height : 40,
+    height : 36,
     marginTop: 5,
-    flex:1
+    flex: 1
   },note:{
     color : '#fff',
-    fontSize:14
+    fontSize: 14,
   },line:{
     height : 1,
     backgroundColor : 'rgba(255,255,255,0.5)',
-    flex:1,
-    marginBottom:8
+    flex: 1,
+    marginBottom: 8
   }
 }
 module.exports = CFTextInputs

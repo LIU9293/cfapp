@@ -7,7 +7,7 @@ import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {userLogin, getUserActivities, getUserInfo,
   getMyDiscoverFilterList, WXInfo, thirdLogin, bindAuthor, secretaryMessage,updateUserNickName } from 'connection';
 import GlobleAlert from '../common/MessageAlert';
-import {CFTextInputs,H1,Header} from 'rn-sexless';
+import {CFTextInputs,H1,Header,Cell,RoundButton} from 'rn-sexless';
 import Gradient from '../common/gradientBackground';
 
 const width = Dimensions.get('window').width;
@@ -22,19 +22,11 @@ const styles = {
     flex:1,
     width: (width - 80)
   },loginButton:{
-    height: 46,
-    width: (width - 80),
-    borderRadius: 23,
+    height: 40,
+    width: width < 375 ? 240 : 280,
+    borderRadius: 20,
     borderColor: 'white',
-    borderWidth: 1,
-    marginTop: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'transparent',
-    textAlign :'center',
-    color:'#fff',
-    fontSize:17,
-    paddingTop:13
+    marginTop: 90,
   }
 }
 
@@ -127,12 +119,19 @@ class SetUserInfo extends Component {
                   this.setState({username:text})
                 }} style = {{marginTop : 90}} label = {"昵称"} note = {null} placeholder = "昵称"
                 placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff"
-                onSubmitEditing = {e =>{this.nextStep()}}/>
-                <Text style = {styles.loginButton} onPress = {e => {this.nextStep()}}>完成注册</Text>
+                onSubmitEditing = {e =>{this.nextStep()}} selectionColor = {'#ccc'}/>
+                <Cell>
+                  <RoundButton
+                      style = {styles.loginButton}
+                      onPress = {e => this.nextStep()}
+                      textStyle= {{color: 'white'}}
+                    >
+                      完成注册
+                  </RoundButton>
+                </Cell>
               </View>
               </Container>
             </ScrollView>
-
           <KeyboardSpacer />
         </Gradient>
       </View>

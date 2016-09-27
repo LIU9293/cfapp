@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {sendSMS, userRegister, updateUserNickName, getUserInfo} from 'connection';
 import GlobleAlert from '../common/MessageAlert';
-import {CFTextInputs,H1,Header} from 'rn-sexless';
+import {CFTextInputs,H1,Header,RoundButton,Cell} from 'rn-sexless';
 import Gradient from '../common/gradientBackground';
 
 
@@ -22,20 +22,11 @@ const styles = {
     flex:1,
     width: (width - 80)
   },loginButton:{
-    flexDirection :'row',
-    height: 46,
-    width: (width - 80),
-    borderRadius: 23,
+    height: 40,
+    width: width < 375 ? 240 : 280,
+    borderRadius: 20,
     borderColor: 'white',
-    borderWidth: 1,
     marginTop: 90,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'transparent',
-    textAlign :'center',
-    color:'#fff',
-    fontSize:17,
-    paddingTop:13
   }
 }
 
@@ -93,8 +84,16 @@ class Register extends Component {
                   <CFTextInputs onChangeText = {(text) => {
                     this.setState({telphone:text})
                   }} style = {{marginTop : 60}} label = {"电话号码"} color = "#fff" maxLength = {11} keyboardType = "numeric" note = {null} placeholder = "电话号码" placeholderTextColor = "rgba(255,255,255,0.5)"
-                  onSubmitEditing = {e =>{this.sendCode()}}/>
-                  <Text transparent style = {styles.loginButton} onPress = {e => {this.state.btnEnabled ? this.sendCode(): null}}>下一步</Text>
+                  onSubmitEditing = {e =>{this.sendCode()}} selectionColor = {'#ccc'} />
+                <Cell>
+                  <RoundButton
+                      style = {styles.loginButton}
+                      onPress = {e => {this.state.btnEnabled ? this.sendCode(): null}}
+                      textStyle= {{color: 'white'}}
+                    >
+                      下一步
+                  </RoundButton>
+                </Cell>
                 </View>
               </Container>
             </ScrollView>

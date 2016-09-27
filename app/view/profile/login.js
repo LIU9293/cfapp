@@ -106,6 +106,7 @@ class Login extends Component{
                 placeholderTextColor = "rgba(255,255,255,0.5)"
                 keyboardType = "numeric"
                 onChange={e => {this.setState({phone: e.nativeEvent.text})}}
+                selectionColor = {'#ccc'}
               />
               <CFTextInputs
                 textStyle = {{color: 'white'}}
@@ -120,6 +121,7 @@ class Login extends Component{
                 noteStyle= {{color: 'powderblue'}}
                 onChange={e => {this.setState({password: e.nativeEvent.text})}}
                 onSubmitEditing = {this.login.bind(this)}
+                selectionColor = {'#ccc'}
               />
               <Text style={{color: '#fff', marginTop: 20}} onPress={e=>{this.props.navigator.push({ident : 'forgetPass'})}}>忘记密码</Text>
               <TouchableOpacity onPress={this.login.bind(this)} style={styles.loginButton}>

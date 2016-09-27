@@ -47,7 +47,9 @@ class Star extends Component{
         />
         <TouchableWithoutFeedback
           onPress={e=>{
-            if(this.state.nextIsAnimate && this.state.position == 0){
+            if(this.props.disabled){
+              this.props.star()
+            } else if(this.state.nextIsAnimate && this.state.position == 0){
               this.animate();
               this.setState({nextIsAnimate: !this.state.nextIsAnimate});
             } else if (!this.state.nextIsAnimate && this.count <= 1){

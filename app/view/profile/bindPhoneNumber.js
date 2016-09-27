@@ -125,9 +125,13 @@ class BindPhoneNumbers extends Component {
       Alert.alert("请输入正确的手机号");return;
     }
     // this.timeCutDown();
+    this.setState({
+      sendBtnEnabled: false
+    })
     sendSMS(phone, '绑定手机', (err, data)=>{
       if(err){
-        console.log(err)
+        Alert.alert(err);
+        this.setState({sendBtnEnabled: true})
       }else {
         this.timeCutDown();
       }
@@ -251,12 +255,17 @@ class BindPhoneNumbers extends Component {
                 placeholderTextColor = "rgba(255,255,255,0.5)"
                 keyboardType = "numeric"
                 onChange={e => {this.setState({phone: e.nativeEvent.text})}}
+                selectionColor = {'#ccc'}
               />
               <View style={{position: 'absolute', top: 97, justifyContent:'center',alignItems:'center',
                 right: 40, height: 30, width: 100}}>
-                <TouchableOpacity onPress={ e => this.sendCode() } style={{padding: 10}} >
+                <TouchableOpacity
+                  onPress={ e => this.sendCode() }
+                  style={{padding: 10}}
+                  disabled={this.state.sendBtnEnabled ? false : true}
+                >
                   <Text style={{color: '#fff'}}>
-                    {this.state.sendBtnEnabled ? '发送验证码' : '请等待' + this.state.limitTime + '秒后再发送'}
+                    {this.state.limitTime == 0 ? '发送验证码' : '请等待' + this.state.limitTime + '秒后再发送'}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -268,6 +277,7 @@ class BindPhoneNumbers extends Component {
                 placeholderTextColor = "rgba(255,255,255,0.5)"
                 keyboardType = "numeric"
                 onChange={e => {this.setState({varify: e.nativeEvent.text})}}
+                selectionColor = {'#ccc'}
               />
               <CFTextInputs
                 textStyle = {{color: 'white'}}
@@ -279,13 +289,16 @@ class BindPhoneNumbers extends Component {
                 secureTextEntry = {true}
                 placeholderTextColor = "rgba(255,255,255,0.5)"
                 onChange={e => {this.setState({password: e.nativeEvent.text})}}
+                selectionColor = {'#ccc'}
               />
-              <RoundButton
-                style={{marginTop: 30}}
-                onPress={e => this.regist()}
-              >
-                绑定
-              </RoundButton>
+              <Cell>
+                <RoundButton
+                  style={{marginTop: 30}}
+                  onPress={e => this.regist()}
+                >
+                  绑定
+                </RoundButton>
+              </Cell>
             </Container>
           </ScrollView>
           <Spacer />

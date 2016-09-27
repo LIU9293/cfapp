@@ -51,12 +51,7 @@ class SecondReply extends Component {
     return(
       <View style = {styles.FatherView}>
         <View style = {{flexDirection: 'row'}}>
-          <TouchableOpacity onPress = {e=>{
-            this.props.navigator.push({
-              ident: 'usercenter',
-              userid: item.UserID
-            })
-          }}>
+          <TouchableOpacity>
             <Image source = {{uri:item.HeadImg}} style = {styles.HeadImg}/>
           </TouchableOpacity>
           <View style = {{flexDirection: 'column',flex:1,marginTop:10}}>
