@@ -15,9 +15,8 @@ class Gradient extends Component{
         <StatusBar
           barStyle={'light-content'}
         />
-        <Image resizeMode = "cover" style = {{width : width,height : height,position :'absolute'}} source = {blurImage}/>
-
-          {this.props.children}
+        <Image resizeMode = "cover" style = {{width: width,height: height, position: 'absolute'}} source = {blurImage}/>
+        {this.props.children}
       </View>
     )
   }
@@ -61,12 +60,7 @@ const html = `
 const styles = StyleSheet.create({
   wapper: {
     flex:1,
-  },
-  container: {
-    height: Window.height, width: Window.width,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  }
 })
 
 module.exports = Gradient

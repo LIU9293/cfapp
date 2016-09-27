@@ -9,9 +9,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Timeline from './timeline';
 import UserArticle from './userArticle';
 import UserCollect from './userCollect';
+import NotLoginPage from '../common/notLoginPage';
 
 const bg = require('../../../images/logo/darkblue.png');
-const notLogin = require('../../../images/logo/result@2x.png');
 const window = Dimensions.get('window');
 const styles = StyleSheet.create({
   avatar: {
@@ -48,14 +48,7 @@ class Profile extends Component{
       )
     }
     return(
-      <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <Image source={notLogin} style={{width: window.width/1.5}} resizeMode="contain" />
-        <View style={{marginTop: 30,}}>
-          <Button success onPress={e=>this.props.navigator.push({ident: 'login'})}>
-            去登录
-          </Button>
-        </View>
-      </View>
+      <NotLoginPage navigator = { this.props.navigator } />
     )
   }
 }

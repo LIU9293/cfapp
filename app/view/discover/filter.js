@@ -3,9 +3,9 @@ import { View, Text, Navigator, StyleSheet, TouchableOpacity, ScrollView, Status
 import FilterItem from './filterItem';
 import { connect } from 'react-redux';
 import { getDiscoverFilterList, getMyDiscoverFilterList, updateMyDiscoverFilterList } from 'connection';
-import { Header } from 'rn-sexless';
+import { Header, RoundButton } from 'rn-sexless';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import NotLoginPage from '../common/notLoginPage';
 const colorForTopic = (count, index) => {
   const hue = Math.round(360 * index / (count + 1));
   return `hsl(${hue}, 74%, 65%)`;
@@ -60,7 +60,19 @@ class FilterScreen extends Component{
         />
       )}
     );
-
+    if(!this.props.user.login){
+      return(
+        <NotLoginPage navigator={this.props.navigator}>
+          <RoundButton
+            style={{borderColor: '#0062fb',marginTop:10}}
+            textStyle={{color: '#0062fb'}}
+            onPress={e => this.props.navigator.pop()}
+          >
+            回主页
+          </RoundButton>
+        </NotLoginPage>
+      )
+    }
     return(
       <View style={{flex:1,backgroundColor:bg}}>
         <StatusBar

@@ -1,5 +1,6 @@
 import React, { Component, } from 'react';
-import { View,Image, Text,TextInput, Navigator, TouchableOpacity, StyleSheet, Dimensions, AsyncStorage,AlertIOS,StatusBar,ScrollView } from 'react-native';
+import { View, Image, Text, TextInput, Alert, Navigator,
+  TouchableOpacity, StyleSheet, Dimensions, AsyncStorage, StatusBar, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { userLogin, getUserActivities, getUserInfo, getMyDiscoverFilterList ,
   WXInfo,thirdLogin,bindAuthor,userRegister,bindPhoneNumber, sendSMS, secretaryMessage } from 'connection';
@@ -111,16 +112,17 @@ class BindPhoneNumbers extends Component {
     this.AllTime = 120;
     this.sendCode = this.sendCode.bind(this);
     this.timeCutDown = this.timeCutDown.bind(this);
+    this.regist = this.regist.bind(this);
   }
 
   sendCode(){
     let phone = this.state.phone;
-    if(phone === undefined){
+    if(!phone){
       Alert.alert("请输入手机号");return;
     }
     let reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/ //手机号码正则
     if(!phone.match(reg)){
-      console.log("手机号不合法");return;
+      Alert.alert("请输入正确的手机号");return;
     }
     // this.timeCutDown();
     sendSMS(phone, '绑定手机', (err, data)=>{
@@ -131,7 +133,6 @@ class BindPhoneNumbers extends Component {
       }
     })
   }
-
   timeCutDown(){
     this.AllTime -- ;
     if(this.AllTime <= 0){
@@ -150,35 +151,37 @@ class BindPhoneNumbers extends Component {
       this.timeCutDown();
     }, 1000);
   }
-
   componentWillUnmount(){
     this.timer && clearTimeout(this.timer);
   }
-
   regist(){
+    console.log('123123123123');
     let phone = this.state.phone;
     let code = this.state.varify;
     let pass = this.state.password;
-    if(phone === undefined)
-    {
-        console.log("手机号不能为空");return;
+    if(!phone){
+      Alert.alert("手机号不能为空");return;
     }
     let reg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/ //手机号码正则
     if(!phone.match(reg)){
-      console.log("手机号不合法");return;
+      Alert.alert("手机号不合法");return;
     }
     if(code === undefined){
-      console.log("请输入验证码");return;
+      Alert.alert("请输入验证码");return;
     }
-
     if(pass === undefined){
-      console.log("请输入有效的密码");return;
+      Alert.alert("请输入有效的密码");return;
     }
     let authorData = this.props.thirdInfo;
+    if(!authorData || (authorData == undefined)){
+      Alert.alert("出错了，请重新绑定～");
+      this.props.navigator.popToTop();
+      return;
+    }
     bindPhoneNumber(authorData.OpendId, authorData.NickName, authorData.Sex, authorData.Soucre, phone, pass, code, authorData.C_ID, authorData.IOS_TOKEN, (err,data) => {
       if(err){
         console.log(err)
-      }else {
+      } else {
         let userid = data.UserId
         AsyncStorage.setItem('UserID', userid);
         getUserInfo(userid, (err4,data4) => {
@@ -226,7 +229,6 @@ class BindPhoneNumbers extends Component {
       }
     })
   }
-
   render(){
     return(
       <View style={{flex:1}}>
@@ -238,46 +240,54 @@ class BindPhoneNumbers extends Component {
             <View />
             <View />
           </Header>
-          <Container style={{paddingHorizontal: 40, flex: 1}}>
-            <H1 style = {{color:'#fff', marginTop: 20}}>绑定手机</H1>
-            <CFTextInputs
-              textStyle = {{color: 'white'}}
-              style = {{marginTop: 30}}
-              label = "电话号码"
-              placeholder = ""
-              placeholderTextColor = "rgba(255,255,255,0.5)"
-              keyboardType = "numeric"
-              note = {this.state.sendBtnEnabled ? '发送验证码' : '请等待' + this.state.limitTime + '秒后再发送'}
-              notePress = { e => this.sendCode() }
-              onChange={e => {this.setState({phone: e.nativeEvent.text})}}
-            />
-            <CFTextInputs
-              textStyle = {{color: 'white'}}
-              style = {{marginTop: 30, width: 100}}
-              label = "验证码"
-              placeholder = ""
-              placeholderTextColor = "rgba(255,255,255,0.5)"
-              keyboardType = "numeric"
-              onChange={e => {this.setState({varify: e.nativeEvent.text})}}
-            />
-            <CFTextInputs
-              textStyle = {{color: 'white'}}
-              style = {{marginTop: 30}}
-              label = "密码"
-              placeholder = ""
-              returnKeyType = "go"
-              autoCorrect = {false}
-              secureTextEntry = {true}
-              placeholderTextColor = "rgba(255,255,255,0.5)"
-              onChange={e => {this.setState({password: e.nativeEvent.text})}}
-            />
-            <RoundButton
-              style={{position: 'absolute', bottom: 30}}
-              onPress={e => this.regist.bind(this)}
-            >
-              绑定
-            </RoundButton>
-          </Container>
+          <ScrollView style={{flex: 1}}>
+            <Container style={{paddingHorizontal: 40, flex: 1}}>
+              <H1 style = {{color:'#fff', marginTop: 10}}>绑定手机</H1>
+              <CFTextInputs
+                textStyle = {{color: 'white'}}
+                style = {{marginTop: 30}}
+                label = "电话号码"
+                placeholder = ""
+                placeholderTextColor = "rgba(255,255,255,0.5)"
+                keyboardType = "numeric"
+                onChange={e => {this.setState({phone: e.nativeEvent.text})}}
+              />
+              <View style={{position: 'absolute', top: 97, justifyContent:'center',alignItems:'center',
+                right: 40, height: 30, width: 100}}>
+                <TouchableOpacity onPress={ e => this.sendCode() } style={{padding: 10}} >
+                  <Text style={{color: '#fff'}}>
+                    {this.state.sendBtnEnabled ? '发送验证码' : '请等待' + this.state.limitTime + '秒后再发送'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <CFTextInputs
+                textStyle = {{color: 'white'}}
+                style = {{marginTop: 10, width: 100}}
+                label = "验证码"
+                placeholder = ""
+                placeholderTextColor = "rgba(255,255,255,0.5)"
+                keyboardType = "numeric"
+                onChange={e => {this.setState({varify: e.nativeEvent.text})}}
+              />
+              <CFTextInputs
+                textStyle = {{color: 'white'}}
+                style = {{marginTop: 10}}
+                label = "密码"
+                placeholder = ""
+                returnKeyType = "go"
+                autoCorrect = {false}
+                secureTextEntry = {true}
+                placeholderTextColor = "rgba(255,255,255,0.5)"
+                onChange={e => {this.setState({password: e.nativeEvent.text})}}
+              />
+              <RoundButton
+                style={{marginTop: 30}}
+                onPress={e => this.regist()}
+              >
+                绑定
+              </RoundButton>
+            </Container>
+          </ScrollView>
           <Spacer />
         </Gradient>
       </View>
