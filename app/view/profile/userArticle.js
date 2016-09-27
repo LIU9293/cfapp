@@ -77,9 +77,25 @@ class UserArticle extends Component{
               </View>
             </TouchableOpacity>
           )
-        } else if(item.Type == 2){
+        } else if(item.Type == 3){
+          let des = JSON.parse(item.ZPT_CONTENT).intro
           return(
-            <View key={ii} />
+            <TouchableOpacity style={styles.row} key={ii} onPress={e=>{
+              this.props.navigator.push({
+                ident: 'article',
+                articleID: item.ZCT_ID,
+                data:{
+                  cover: item.ZPT_COVER,
+                  title: item.ZPT_TITLE,
+                }
+              })
+            }}>
+              <Image style={styles.cover} source={{url: item.ZPT_COVER + '@140h_140w_1e_1c_95q'}} />
+              <View style={styles.content}>
+                <Text style={styles.title} numberOfLines={1}>{item.ZPT_TITLE}</Text>
+                <Text style={styles.des} numberOfLines={2}>{des}</Text>
+              </View>
+            </TouchableOpacity>
           )
         }
       })

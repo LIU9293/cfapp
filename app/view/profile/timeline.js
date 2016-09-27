@@ -34,7 +34,7 @@ class Timeline extends Component{
         ident: 'login'
       })
     } else {
-      getUserLikes(1000, 1, this.props.user.userid, 0, (err,data)=>{
+      getUserLikes(1000, 1, this.props.user.userid, 0, (err,data) => {
         if(err){
           console.log(err);
           this.setState({
@@ -47,7 +47,7 @@ class Timeline extends Component{
           })
         }
       });
-      getUserArticles(this.props.user.userid, (err,data)=>{
+      getUserArticles(this.props.user.userid, (err,data) => {
         if(err){
           console.log(err);
           this.setState({
@@ -86,7 +86,7 @@ class Timeline extends Component{
           })
         };
       });
-      getUserComment(1000, 1, this.props.user.userid, 0, (err,data)=>{
+      getUserComment(1000, 1, this.props.user.userid, 0, (err,data) => {
         if(err){
           console.log(err);
           this.setState({
@@ -101,13 +101,6 @@ class Timeline extends Component{
       });
     }
   }
-  // shouldComponentUpdate(nextProps, nextState){
-  //   if(nextState.loaded == this.state.loaded && nextProps == this.props){
-  //     return false
-  //   } else {
-  //     return true
-  //   }
-  // }
   componentWillUnmount(){
     this.t = null;
   }
@@ -127,7 +120,6 @@ class Timeline extends Component{
     if(this.loaded){
       this.sortedData = [];
       commentData.map((item,ii)=>{
-        console.log(item.CreatDate);
         this.sortedData.push({
           type: 'comment',
            articleType: item.Type,
@@ -172,6 +164,7 @@ class Timeline extends Component{
         })
       });
       collectData.map((item,ii)=>{
+        console.log(millseconds2DateDiff('/Date(' + dataTime2Millsecond(item.UserArticle.CollentDate) + ')/'));
         this.sortedData.push({
           type: 'collect',
           articleType: item.UserArticle.Type,

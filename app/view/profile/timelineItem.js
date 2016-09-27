@@ -66,7 +66,7 @@ class TimelineItem extends Component{
                 </View>
                 <View
                   style={{flexDirection: 'row', margin: 5,
-                    borderWidth: 0.5, borderColor: '#ccc'}}
+                    borderWidth: 0.5, borderColor: '#ddd'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
                   <Cell style={{backgroundColor: '#fff'}}>
@@ -111,7 +111,7 @@ class TimelineItem extends Component{
                 </View>
                 <View
                   style={{flexDirection: 'row', margin: 5,
-                    borderWidth: 0.5, borderColor: '#ccc'}}
+                    borderWidth: 0.5, borderColor: '#ddd'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
                   <Cell style={{backgroundColor: '#fff'}}>
@@ -156,7 +156,7 @@ class TimelineItem extends Component{
                 </View>
                 <View
                   style={{flexDirection: 'row', margin: 5,
-                    borderWidth: 0.5, borderColor: '#ccc'}}
+                    borderWidth: 0.5, borderColor: '#ddd'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
                   <Cell style={{backgroundColor: '#fff'}}>
@@ -201,7 +201,7 @@ class TimelineItem extends Component{
                 </View>
                 <View
                   style={{flexDirection: 'row', margin: 5,
-                    borderWidth: 0.5, borderColor: '#ccc'}}
+                    borderWidth: 0.5, borderColor: '#ddd'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
                   <Cell style={{backgroundColor: '#fff'}}>
