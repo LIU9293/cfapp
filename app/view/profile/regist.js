@@ -45,7 +45,8 @@ class Register extends Component {
     this.state = {
       limitTime : 0,
       sendBtnEnabled:true,
-      telphone : ""
+      telphone : "",
+      btnEnabled : true,
     }
     this.sendCode = this.sendCode.bind(this);
   }
@@ -59,6 +60,7 @@ class Register extends Component {
     if(!phone.match(reg)){
       this.props.showAlert("手机号不合法");return;
     }
+    this.setState({btnEnabled:false})
     sendSMS(phone, '注册', (err, data)=>{
       if(err){
         this.props.showAlert(err);return;
@@ -88,9 +90,9 @@ class Register extends Component {
             <H1 style = {{color:'#fff'}}>注册</H1>
             <CFTextInputs onChangeText = {(text) => {
               this.setState({telphone:text})
-            }} style = {{marginTop : 60}} label = {"电话号码"} color = "#fff" maxLength = {11} keyboardType = "numeric" note = {null} placeholder = "电话号码" placeholderTextColor = "rgba(255,255,255,0.5)"/>
-
-            <Text transparent style = {styles.loginButton} onPress = {e => this.sendCode()}>下一步</Text>
+            }} style = {{marginTop : 60}} label = {"电话号码"} color = "#fff" maxLength = {11} keyboardType = "numeric" note = {null} placeholder = "电话号码" placeholderTextColor = "rgba(255,255,255,0.5)"
+            onSubmitEditing = {e =>{this.sendCode()}}/>
+            <Text transparent style = {styles.loginButton} onPress = {e => {this.state.btnEnabled ? this.sendCode(): null}}>下一步</Text>
           </View>
 
           <KeyboardSpacer />
