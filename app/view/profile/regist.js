@@ -78,12 +78,11 @@ class Register extends Component {
     return(
       <View style={{flex:1}}>
         <GlobleAlert />
-        <StatusBar barStyle="default"/>
-        <Gradient>
+          <Gradient>
             <Header style = {{backgroundColor:'transparent'}}>
-              <Button transparent onPress={e=>{this.props.navigator.pop()}}>
-                  <Icon name='ios-arrow-back' style={{color: '#fff'}} size={26} />
-              </Button>
+              <TouchableOpacity onPress={e => this.props.navigator.popToTop()}>
+                <Icon name="ios-arrow-back" size={26} style={{color: 'white'}}/>
+              </TouchableOpacity>
               <Title></Title>
               <Text></Text>
             </Header>
