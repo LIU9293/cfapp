@@ -112,15 +112,17 @@ class AddCommment extends Component {
           }}
           multiline  = {true} />
         </View>
-        <View style = {styles.toolBar} >
-            <Icon name = "ios-image" size = {24} style = {{marginRight:10,marginTop:3,color:'#2db7f5'}}/>
-        </View>
         <KeyboardSpacer />
       </View>
     )
   }
 }
 
+/*
+<View style = {styles.toolBar} >
+    <Icon name = "ios-image" size = {24} style = {{marginRight:10,marginTop:3,color:'#2db7f5'}}/>
+</View>
+*/
 
 function mapStateToProps(store){
   return {

@@ -122,9 +122,10 @@ class SetUserInfo extends Component {
             <H1 style = {{color:'#fff'}}>完成注册</H1>
             <CFTextInputs onChangeText = {(text) => {
               this.setState({username:text})
-            }} style = {{marginTop : 90}} label = {"昵称"} note = {null} placeholder = "昵称" placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff"/>
-
-            <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>完成注册</Text>
+            }} style = {{marginTop : 90}} label = {"昵称"} note = {null} placeholder = "昵称"
+            placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff"
+            onSubmitEditing = {e =>{this.nextStep()}}/>
+            <Text style = {styles.loginButton} onPress = {e => {this.nextStep()}}>完成注册</Text>
 
           </View>
           <KeyboardSpacer />

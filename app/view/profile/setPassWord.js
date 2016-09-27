@@ -92,9 +92,10 @@ class SetPassword extends Component {
 
             <CFTextInputs onChangeText = {(text) => {
               this.setState({passAgain:text})
-            }} style = {{marginTop : 30}} label = {"确认密码"} note = {null} placeholder = "确认密码" placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}/>
-
-            <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>下一步</Text>
+            }} style = {{marginTop : 30}} label = {"确认密码"} note = {null} placeholder = "确认密码"
+            placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" secureTextEntry = {true}
+            onSubmitEditing = {e =>{this.nextStep()}}/>
+            <Text style = {styles.loginButton} onPress = {e => {this.nextStep()}}>下一步</Text>
 
           </View>
           <KeyboardSpacer />

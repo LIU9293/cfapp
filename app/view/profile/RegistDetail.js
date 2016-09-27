@@ -46,7 +46,7 @@ class RegistDetails extends Component {
       telphone : this.props.telPhone,
       code:""
     }
-    this.AllTime = 10;
+    this.AllTime = 120;
     this.timer = null;
     this.sendCode = this.sendCode.bind(this);
     this.timeCutDown = this.timeCutDown.bind(this);
@@ -68,8 +68,8 @@ class RegistDetails extends Component {
   componentDidMount(){
     this.sendCode()
   }
-  componentWillUnMount(){
-    this.timer && clearTimeout(this.timer)
+  componentWillUnmount(){
+    clearTimeout(this.timer)
   }
 
   timeCutDown(){
@@ -123,8 +123,9 @@ class RegistDetails extends Component {
             }} style = {{marginTop : 60}} label = {"验证码"} placeholder = "验证码"
             notePress = {this.state.limitTime === 0?this.sendCode:null}
             note = {this.state.limitTime === 0 ? "未收到验证码?":("已发送至您的手机,"+this.state.limitTime+"秒后可在发送")}
-            placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" keyboardType = "numeric"/>
-            <Text style = {styles.loginButton} onPress = {e => this.nextStep()}>下一步</Text>
+            placeholderTextColor = "rgba(255,255,255,0.5)" color = "#fff" keyboardType = "numeric"
+            onSubmitEditing = {e =>{this.nextStep()}}/>
+            <Text style = {styles.loginButton} onPress = {e => {this.nextStep()}}>下一步</Text>
           </View>
           <KeyboardSpacer />
         </Gradient>
