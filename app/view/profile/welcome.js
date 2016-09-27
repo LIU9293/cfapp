@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet, TouchableOpacity, Image, AsyncStorage, Alert } from 'react-native';
 import * as wechat from 'react-native-wechat';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Container, Header, Window, Cell } from 'rn-sexless';
+import { Container, Header, Window, Cell, RoundButton } from 'rn-sexless';
 import Gradient from '../common/gradientBackground';
 import { userLogin, getUserActivities, getUserInfo,
   getMyDiscoverFilterList, WXInfo, thirdLogin, bindAuthor, secretaryMessage } from 'connection';
@@ -135,12 +135,12 @@ class Welcome extends Component{
 
 const styles = StyleSheet.create({
   logo: {
-    width: 280,
+    width: Window.width < 375 ? 240 : 280,
     marginBottom: 50,
   },
   button: {
-    height: 44,
-    width: 280,
+    height: Window.width < 375 ? 40 : 44,
+    width: Window.width < 375 ? 240 : 280,
     borderRadius: 23,
     borderColor: 'white',
     borderWidth: 1,

@@ -54,7 +54,6 @@ class Timeline extends Component{
             articleLoaded: true,
           })
         } else {
-          console.log('发文章timeline', data.UserArticleList);
           this.setState({
             articleLoaded: true,
             articleData: data.UserArticleList,
@@ -68,7 +67,6 @@ class Timeline extends Component{
             collectLoaded: true,
           })
         } else {
-          console.log('收藏timeline', data.UserCollectList);
           this.setState({
             collectLoaded: true,
             collectData: data.UserCollectList ,
@@ -129,6 +127,7 @@ class Timeline extends Component{
     if(this.loaded){
       this.sortedData = [];
       commentData.map((item,ii)=>{
+        console.log(item.CreatDate);
         this.sortedData.push({
           type: 'comment',
            articleType: item.Type,
@@ -152,7 +151,7 @@ class Timeline extends Component{
             articleContent: item.ZPT_CONTENT,
             articleTitle: item.ZPT_TITLE,
             articleCover: item.ZPT_COVER,
-            time: millseconds2DateDiff(dataTime2Millsecond(item.ArticleReleaseToNow)),
+            time: millseconds2DateDiff('/Date('+dataTime2Millsecond(item.ArticleReleaseToNow)+')/'),
             createTime: dataTime2Millsecond(item.ArticleReleaseToNow),
           })
         }
@@ -182,7 +181,7 @@ class Timeline extends Component{
           articleTitle: item.UserArticle.ZPT_TITLE,
           articleCover: item.UserArticle.ZPT_COVER,
           articleWriterName: item.UserArticle.Push_People,
-          time: millseconds2DateDiff(dataTime2Millsecond(item.UserArticle.CollentDate)),
+          time: millseconds2DateDiff('/Date(' + dataTime2Millsecond(item.UserArticle.CollentDate) + ')/'),
           createTime: dataTime2Millsecond(item.UserArticle.CollentDate),
         })
       });

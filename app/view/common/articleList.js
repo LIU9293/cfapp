@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Container, P, H2, Cell } from 'rn-sexless';
 const window = Dimensions.get('window');
@@ -28,34 +28,36 @@ class ArticleList extends Component{
               </View>
               <Text style={styles.time}>{item.time}</Text>
             </View>
-            <TouchableOpacity onPress={e => this.props.navigator.push({
+            <TouchableWithoutFeedback onPress={e => this.props.navigator.push({
               ident: 'article',
               articleID: item.id,
               data: item,
             })}>
-            <Image source={{url: item.cover + '@200h_' + window.width*1.2 + 'w_1e_1c_100q'}} style={styles.cover} />
-              <View style={styles.footer}>
-                <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
-                <Text numberOfLines={2} style={styles.description}>{item.content}</Text>
-                <View style={styles.bottomInfo}>
-                  <View>
-                    <Text style={styles.category}>{item.category}</Text>
-                  </View>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                      name="ios-chatbubbles"
-                      size={15}
-                      style={{marginLeft:8,marginRight:8,color:textColor}} />
-                    <Text style={styles.comment}>{item.commentNum || 0}</Text>
-                    <Icon
-                      name="ios-heart"
-                      size={15}
-                      style={{marginLeft:14,marginRight:8,color:textColor}} />
-                    <Text style={styles.like}>{item.likeNum}</Text>
+              <View>
+                <Image source={{url: item.cover + '@200h_430w_1e_1c_100q'}} style={styles.cover} />
+                <View style={styles.footer}>
+                  <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
+                  <Text numberOfLines={2} style={styles.description}>{item.content}</Text>
+                  <View style={[styles.bottomInfo, {paddingHorizontal: 0}]}>
+                    <View>
+                      <Text style={styles.category}>{item.category}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon
+                        name="ios-chatbubbles"
+                        size={15}
+                        style={{marginLeft:8,marginRight:8,color:textColor}} />
+                      <Text style={styles.comment}>{item.commentNum || 0}</Text>
+                      <Icon
+                        name="ios-heart"
+                        size={15}
+                        style={{marginLeft:14,marginRight:8,color:textColor}} />
+                      <Text style={styles.like}>{item.likeNum}</Text>
+                    </View>
                   </View>
                 </View>
               </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           </View>
         )
       //没有头图的文章
@@ -69,33 +71,33 @@ class ArticleList extends Component{
               </View>
               <Text style={styles.time}>{item.time}</Text>
             </View>
-            <TouchableOpacity onPress={e => this.props.navigator.push({
+            <TouchableWithoutFeedback onPress={e => this.props.navigator.push({
               ident: 'article',
               articleID: item.id,
               data: item,
             })}>
-              <View style={styles.footer}>
-                <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
-                <Text numberOfLines={2} style={styles.description}>{item.content}</Text>
-                <View style={styles.bottomInfo}>
-                  <View>
-                    <Text style={styles.category}>{item.category}</Text>
-                  </View>
-                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Icon
-                      name="ios-chatbubbles"
-                      size={15}
-                      style={{marginLeft:8,marginRight:8,color:textColor}} />
-                    <Text style={styles.comment}>{item.commentNum || 0}</Text>
-                    <Icon
-                      name="ios-heart"
-                      size={15}
-                      style={{marginLeft:14,marginRight:8,color:textColor}} />
-                    <Text style={styles.like}>{item.likeNum}</Text>
+                <View style={styles.footer}>
+                  <Text numberOfLines={1} style={styles.title}>{item.title}</Text>
+                  <Text numberOfLines={2} style={styles.description}>{item.content}</Text>
+                  <View style={[styles.bottomInfo, {paddingHorizontal: 0}]}>
+                    <View>
+                      <Text style={styles.category}>{item.category}</Text>
+                    </View>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Icon
+                        name="ios-chatbubbles"
+                        size={15}
+                        style={{marginLeft:8,marginRight:8,color:textColor}} />
+                      <Text style={styles.comment}>{item.commentNum || 0}</Text>
+                      <Icon
+                        name="ios-heart"
+                        size={15}
+                        style={{marginLeft:14,marginRight:8,color:textColor}} />
+                      <Text style={styles.like}>{item.likeNum}</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
           </View>
         )
       //外链
@@ -119,42 +121,42 @@ class ArticleList extends Component{
               </View>
               <Text style={styles.time}>{item.time}</Text>
             </View>
-            <Container style={{paddingHorizontal: 10, paddingTop: 3}}>
+            <Container style={{paddingHorizontal: 10, paddingTop: 3, backgroundColor: '#fff'}}>
               {userSay}
-            </Container>
-            <TouchableOpacity
-              style={{flexDirection: 'row', margin: 10,
-                borderWidth: 0.5, borderColor: '#ccc'}}
-              onPress={e=>this.props.navigator.push({
-                ident: 'article',
-                articleID: item.id,
-                data: item,
-              })}
-            >
-              <Image source={{url: dict.image + '@140h_140w_1e_1c_100q'}} style={{height: 60, width:70}} />
-              <Cell>
-                <H2 style={{maxWidth: window.width - 140, fontSize: 18}} numberOfLines={2}>
-                  {item.title}
-                </H2>
-              </Cell>
-            </TouchableOpacity>
-            <View style={styles.bottomInfo}>
-                <View>
-                  <Text style={styles.category}>{item.category}</Text>
+              <TouchableOpacity
+                style={{flexDirection: 'row', marginTop: 10,
+                  borderWidth: 0.5, borderColor: '#ccc', marginBottom: 0, backgroundColor: '#fff'}}
+                onPress={e=>this.props.navigator.push({
+                  ident: 'article',
+                  articleID: item.id,
+                  data: item,
+                })}
+              >
+                <Image source={{url: dict.image + '@140h_140w_1e_1c_100q'}} style={{height: 60, width:70}} />
+                <Cell style={{backgroundColor: '#fff'}}>
+                  <H2 style={{maxWidth: window.width - 140, fontSize: 18}} numberOfLines={2}>
+                    {item.title}
+                  </H2>
+                </Cell>
+              </TouchableOpacity>
+              <View style={styles.bottomInfo}>
+                  <View>
+                    <Text style={styles.category}>{item.category}</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                    <Icon
+                      name="ios-chatbubbles"
+                      size={15}
+                      style={{marginLeft:8,marginRight:8,color:textColor}} />
+                    <Text style={styles.comment}>{item.commentNum || 0}</Text>
+                    <Icon
+                      name="ios-heart"
+                      size={15}
+                      style={{marginLeft:14,marginRight:8,color:textColor}} />
+                    <Text style={styles.like}>{item.likeNum}</Text>
+                  </View>
                 </View>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Icon
-                    name="ios-chatbubbles"
-                    size={15}
-                    style={{marginLeft:8,marginRight:8,color:textColor}} />
-                  <Text style={styles.comment}>{item.commentNum || 0}</Text>
-                  <Icon
-                    name="ios-heart"
-                    size={15}
-                    style={{marginLeft:14,marginRight:8,color:textColor}} />
-                  <Text style={styles.like}>{item.likeNum}</Text>
-                </View>
-              </View>
+              </Container>
           </View>
         )
       }
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
     marginLeft:10
   },
   box:{
-    backgroundColor:'white',
+    backgroundColor:'#fff',
     marginBottom:10,
     borderTopWidth:0.5,
     borderBottomWidth:0.5,
@@ -218,14 +220,14 @@ const styles = StyleSheet.create({
   },
   cover:{
     height:140,
+    width: window.width
   },
   bottomInfo:{
     flexDirection: 'row',
     height: 30,
     alignItems:'center',
     justifyContent: 'space-between',
-    marginBottom:5,
-    paddingHorizontal: 10,
+    backgroundColor: '#fff',
   },
   header:{
     flexDirection: 'row',

@@ -47,7 +47,7 @@ class TimelineItem extends Component{
                   <Text style={styles.intro}>{'评论了 '+ data.articleWriterName +' 的文章'}</Text>
                   <Text style={styles.intro}>{data.time}</Text>
                 </View>
-                <Image style={styles.cover} source={{url: data.articleCover + '@140h_300w_1e_1c_100q'}} />
+                <Image style={styles.cover} source={{url: data.articleCover + '@180h_400w_1e_1c_100q'}} />
                 <Text style={styles.title} numberOfLines={1} >{data.articleTitle}</Text>
                 <Text style={styles.intro} numberOfLines={2} >{S(data.articleContent).decodeHTMLEntities().stripTags().s}</Text>
               </TouchableOpacity>
@@ -69,7 +69,7 @@ class TimelineItem extends Component{
                     borderWidth: 0.5, borderColor: '#ccc'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
-                  <Cell>
+                  <Cell style={{backgroundColor: '#fff'}}>
                     <H2 style={{marginHorizontal: 5, fontSize: 16}} numberOfLines={2}>
                       {data.articleTitle}
                     </H2>
@@ -92,7 +92,7 @@ class TimelineItem extends Component{
                   <Text style={styles.intro}>{'发布了文章'}</Text>
                   <Text style={styles.intro}>{data.time}</Text>
                 </View>
-                <Image style={styles.cover} source={{url: data.articleCover + '@140h_300w_1e_1c_100q'}} />
+                <Image style={styles.cover} source={{url: data.articleCover + '@180h_400w_1e_1c_100q'}} />
                 <Text style={styles.title} numberOfLines={1} >{data.articleTitle}</Text>
                 <Text style={styles.intro} numberOfLines={2} >{S(data.articleContent).decodeHTMLEntities().stripTags().s}</Text>
               </TouchableOpacity>
@@ -114,7 +114,7 @@ class TimelineItem extends Component{
                     borderWidth: 0.5, borderColor: '#ccc'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
-                  <Cell>
+                  <Cell style={{backgroundColor: '#fff'}}>
                     <H2 style={{marginHorizontal: 5, fontSize: 16}} numberOfLines={2}>
                       {data.articleTitle}
                     </H2>
@@ -137,7 +137,7 @@ class TimelineItem extends Component{
                   <Text style={styles.intro}>{'👍了 '+ data.articleWriterName +' 的文章'}</Text>
                   <Text style={styles.intro}>{data.time}</Text>
                 </View>
-                <Image style={styles.cover} source={{url: data.articleCover + '@140h_300w_1e_1c_100q'}} />
+                <Image style={styles.cover} source={{url: data.articleCover + '@180h_400w_1e_1c_100q'}} />
                 <Text style={styles.title} numberOfLines={1} >{data.articleTitle}</Text>
                 <Text style={styles.intro} numberOfLines={2} >{S(data.articleContent).decodeHTMLEntities().stripTags().s}</Text>
               </TouchableOpacity>
@@ -159,7 +159,7 @@ class TimelineItem extends Component{
                     borderWidth: 0.5, borderColor: '#ccc'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
-                  <Cell>
+                  <Cell style={{backgroundColor: '#fff'}}>
                     <H2 style={{marginHorizontal: 5, fontSize: 16}} numberOfLines={2}>
                       {data.articleTitle}
                     </H2>
@@ -182,7 +182,7 @@ class TimelineItem extends Component{
                   <Text style={styles.intro}>{'收藏了 '+ data.articleWriterName +' 的文章'}</Text>
                   <Text style={styles.intro}>{data.time}</Text>
                 </View>
-                <Image style={styles.cover} source={{url: data.articleCover + '@140h_300w_1e_1c_100q'}} />
+                <Image style={styles.cover} source={{url: data.articleCover + '@180h_400w_1e_1c_100q'}} />
                 <Text style={styles.title} numberOfLines={1} >{data.articleTitle}</Text>
                 <Text style={styles.intro} numberOfLines={2} >{S(data.articleContent).decodeHTMLEntities().stripTags().s}</Text>
               </TouchableOpacity>
@@ -204,7 +204,7 @@ class TimelineItem extends Component{
                     borderWidth: 0.5, borderColor: '#ccc'}}
                 >
                   <Image source={{url: data.articleCover + '@140h_140w_1e_1c_100q'}} style={{height: 55, width:60}} />
-                  <Cell>
+                  <Cell style={{backgroundColor: '#fff'}}>
                     <H2 style={{marginHorizontal: 5, fontSize: 16}} numberOfLines={2}>
                       {data.articleTitle}
                     </H2>
@@ -273,6 +273,7 @@ const styles = StyleSheet.create({
   intro: {
     fontSize: 12,
     color: '#aaa',
+    backgroundColor: '#fff'
   },
   title: {
     fontSize: 16,
