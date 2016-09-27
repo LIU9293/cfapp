@@ -1,5 +1,6 @@
 import React, { Compoent } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+export const Window = Dimensions.get('window');
 
 export const RoundButton = (props) => {
   return(
@@ -11,8 +12,8 @@ export const RoundButton = (props) => {
 
 const styles = StyleSheet.create({
   round: {
-    height: 44,
-    width: 280,
+    height: Window.width < 375 ? 40 : 44,
+    width: Window.width < 375 ? 240 : 280,
     borderRadius: 22,
     borderColor: 'white',
     borderWidth: 1,

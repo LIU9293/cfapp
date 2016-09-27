@@ -52,7 +52,7 @@ class ActivityCards extends Component {
                 })
               }}
             >
-              <Image source={{url: item.PictureUrl + '@220h_400w_1e_1c_100q'}} style={styles.cover} resizeMode="cover" />
+              <Image source={{url: item.PictureUrl + '@250h_420w_1e_1c_100q'}} style={styles.cover} resizeMode="cover" />
               <Text style={styles.subtitle}>{item.ActivityTitle}</Text>
               <View style={styles.row}>
                 <Text style={styles.rowLabel}>地点</Text>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   cover: {
     width: (window.width - 40),
-    height: 160,
+    height: 180,
   },
   subtitle: {
     color: '#000',

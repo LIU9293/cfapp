@@ -1,5 +1,5 @@
 import React, { Component, } from 'react';
-import { View, Image, Text, Navigator, TouchableOpacity, StyleSheet, Dimensions, AsyncStorage,Alert, StatusBar, Platform, TextInput } from 'react-native';
+import { View, Image, Text, Navigator, TouchableOpacity, StyleSheet, Dimensions, AsyncStorage,Alert, StatusBar, Platform, TextInput, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { userLogin, getUserActivities, getUserInfo,
   getMyDiscoverFilterList, WXInfo, thirdLogin, bindAuthor, secretaryMessage } from 'connection';
@@ -88,45 +88,46 @@ class Login extends Component{
     return(
       <View style={{flex:1}}>
         <Gradient>
-           <Header style={{backgroundColor: 'transparent'}}>
+          <Header style={{backgroundColor: 'transparent'}}>
              <TouchableOpacity onPress={e => this.props.navigator.pop()}>
                <Icon name="ios-arrow-back" size={26} style={{color: 'white'}}/>
              </TouchableOpacity>
              <View />
              <View />
           </Header>
-          <Container style={{paddingHorizontal: 40, flex: 1}}>
-            <H1 style = {{color:'#fff', marginTop: 15}}>登录</H1>
-            <CFTextInputs
-              textStyle = {{color: 'white'}}
-              style = {{marginTop: 30}}
-              label = "电话号码"
-              placeholder = ""
-              placeholderTextColor = "rgba(255,255,255,0.5)"
-              keyboardType = "numeric"
-              onChange={e => {this.setState({phone: e.nativeEvent.text})}}
-            />
-            <CFTextInputs
-              textStyle = {{color: 'white'}}
-              style = {{marginTop: 15}}
-              label = "密码"
-              placeholder = ""
-              placeholderTextColor = "rgba(255,255,255,0.5)"
-              returnKeyType = "go"
-              autoCorrect = {false}
-              secureTextEntry = {true}
-              note = {this.state.err}
-              noteStyle= {{color: 'red'}}
-              onChange={e => {this.setState({password: e.nativeEvent.text})}}
-              onSubmitEditing = {this.login.bind(this)}
-            />
-            <Text style={{color: '#fff', marginTop: 20}} onPress={e=>{this.props.navigator.push({ident : 'forgetPass'})}}>忘记密码</Text>
-            <TouchableOpacity onPress={this.login.bind(this)} style={styles.loginButton}>
-              <Text style={{color: '#fff', fontSize: 16}}>登录</Text>
-            </TouchableOpacity>
-          </Container>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Container style={{paddingHorizontal: 40, flex: 1}}>
+              <H1 style = {{color:'#fff', marginTop: 15}}>登录</H1>
+              <CFTextInputs
+                textStyle = {{color: 'white'}}
+                style = {{marginTop: 20}}
+                label = "电话号码"
+                placeholder = ""
+                placeholderTextColor = "rgba(255,255,255,0.5)"
+                keyboardType = "numeric"
+                onChange={e => {this.setState({phone: e.nativeEvent.text})}}
+              />
+              <CFTextInputs
+                textStyle = {{color: 'white'}}
+                style = {{marginTop: 10}}
+                label = "密码"
+                placeholder = ""
+                placeholderTextColor = "rgba(255,255,255,0.5)"
+                returnKeyType = "go"
+                autoCorrect = {false}
+                secureTextEntry = {true}
+                note = {this.state.err}
+                noteStyle= {{color: 'powderblue'}}
+                onChange={e => {this.setState({password: e.nativeEvent.text})}}
+                onSubmitEditing = {this.login.bind(this)}
+              />
+              <Text style={{color: '#fff', marginTop: 20}} onPress={e=>{this.props.navigator.push({ident : 'forgetPass'})}}>忘记密码</Text>
+              <TouchableOpacity onPress={this.login.bind(this)} style={styles.loginButton}>
+                <Text style={{color: '#fff', fontSize: 16}}>登录</Text>
+              </TouchableOpacity>
+            </Container>
+          </ScrollView>
           <Spacer />
-
         </Gradient>
       </View>
     )
@@ -165,15 +166,14 @@ const styles = StyleSheet.create({
     height :56
   },
   loginButton:{
-    height: 44,
+    height: width < 375 ? 40 : 44,
     width: width - 80,
     borderRadius: 23,
     borderColor: 'white',
     borderWidth: 1,
-    bottom: 20,
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute'
   }
 })
 
