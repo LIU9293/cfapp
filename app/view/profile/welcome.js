@@ -58,53 +58,37 @@ class Welcome extends Component{
                             }
                             this.props.login(userid, userData);
                           }
+                        });
+                        getUserActivities(userid, (err,data) => {
+                          if(err){console.log(err)} else {
+                            data.UserActivityList.map((item,ii)=>{
+                              this.props.baoming(item.ZET_ID)
+                            })
+                          }
                         })
+                        getMyDiscoverFilterList(userid, (err, data) => {
+                          if(err){console.log(err)} else {
+                            let select = {};
+                            data.ChannelList.map((item, ii)=>{
+                              select[item.ChannelID] = item.ChannelName
+                            })
+                            this.props.update_user_topic(select);
+                          }
+                        })
+                        secretaryMessage(userid, 'No', (err,data)=>{
+                          if(err){
+                            console.log(err);
+                          } else {
+                            if(data.List.length > 0){
+                              AsyncStorage.setItem('Messages', JSON.stringify(this.props.messages.concat(data.List)))
+                                .catch(err => console.log(err))
+                                .done()
+                              this.props.update_messages(this.props.messages.concat(data.List));
+                            }
+                          }
+                        })
+                        this.props.navigator.popToTop();
                       });
-                      getUserInfo(userid, (err4,data4) => {
-                        if(err4){
-                          console.log("err4",err4);
-                        } else {
-                          let userData = {
-                            avatar: data.ZUT_HEADIMG,
-                            nickName: data.ZUT_NICKNAME,
-                            phone: data.ZUT_PHONE,
-                            userDesc : data.UserDes,
-                            wechat: data.IsBindWeChat,
-                            qq: data.IsBindQQ,
-                            linkedin: data.IsBindLinkedIn,
-                          }
-                          this.props.login(userid, userData);
-                        }
-                      })
-                      getUserActivities(userid, (err,data) => {
-                        if(err){console.log(err)} else {
-                          data.UserActivityList.map((item,ii)=>{
-                            this.props.baoming(item.ZET_ID)
-                          })
-                        }
-                      })
-                      getMyDiscoverFilterList(userid, (err, data) => {
-                        if(err){console.log(err)} else {
-                          let select = {};
-                          data.ChannelList.map((item, ii)=>{
-                            select[item.ChannelID] = item.ChannelName
-                          })
-                          this.props.update_user_topic(select);
-                        }
-                      })
-                      secretaryMessage(userid, 'No', (err,data)=>{
-                        if(err){
-                          console.log(err);
-                        } else {
-                          if(data.List.length > 0){
-                            AsyncStorage.setItem('Messages', JSON.stringify(this.props.messages.concat(data.List)))
-                              .catch(err => console.log(err))
-                              .done()
-                            this.props.update_messages(this.props.messages.concat(data.List));
-                          }
-                        }
-                      })
-                      this.props.navigator.popToTop();
                     }
                   })
                 }
@@ -113,7 +97,7 @@ class Welcome extends Component{
             .catch(err => console.log(err))
         }
         else {
-          Alert.alert('没有安装微信')
+          Alert.alert('没有安装微信');
         }
       })
       .catch(err => console.log(err))
@@ -125,7 +109,7 @@ class Welcome extends Component{
       <View style={{flex: 1}}>
         <Gradient>
           <Header style={{backgroundColor: 'transparent'}}>
-            <TouchableOpacity onPress={e => this.props.navigator.pop()}>
+            <TouchableOpacity onPress={e => this.props.navigator.popToTop()}>
               <Icon name="ios-arrow-back" size={26} style={{color: 'white'}}/>
             </TouchableOpacity>
             <View />

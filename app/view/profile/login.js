@@ -96,7 +96,7 @@ class Login extends Component{
              <View />
           </Header>
           <Container style={{paddingHorizontal: 40, flex: 1}}>
-            <H1 style = {{color:'#fff', marginTop: 20}}>登录</H1>
+            <H1 style = {{color:'#fff', marginTop: 15}}>登录</H1>
             <CFTextInputs
               textStyle = {{color: 'white'}}
               style = {{marginTop: 30}}
@@ -108,7 +108,7 @@ class Login extends Component{
             />
             <CFTextInputs
               textStyle = {{color: 'white'}}
-              style = {{marginTop: 30}}
+              style = {{marginTop: 15}}
               label = "密码"
               placeholder = ""
               placeholderTextColor = "rgba(255,255,255,0.5)"

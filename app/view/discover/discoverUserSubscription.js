@@ -5,7 +5,7 @@ import { millseconds2DateDiff } from '../../vendor/helper/timeTransfer';
 import { getPostsByChannel, getMyDiscoverFilterList } from 'connection';
 import ArticleList from '../common/articleList';
 import { Button } from 'native-base';
-const notLogin = require('../../../images/logo/result@2x.png');
+import NotLoginPage from '../common/notLoginPage';
 
 class DiscoverUserSubscription extends Component{
 
@@ -110,14 +110,7 @@ class DiscoverUserSubscription extends Component{
   render(){
     if(!this.props.user.login){
       return(
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <Image source={notLogin} style={{width: window.width/1.5}} resizeMode="contain" />
-          <View style={{marginTop: 30,}}>
-            <Button success onPress={e=>this.props.navigator.push({ident: 'login'})}>
-              去登录
-            </Button>
-          </View>
-        </View>
+        <NotLoginPage navigator={this.props.navigator} />
       )
     } else if(Object.entries(this.props.selectedTopics).length == 0) {
       return (
