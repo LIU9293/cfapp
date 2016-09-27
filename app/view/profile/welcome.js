@@ -48,13 +48,13 @@ class Welcome extends Component{
                             console.log("err4",err4);
                           } else {
                             let userData = {
-                              avatar: data.ZUT_HEADIMG,
-                              nickName: data.ZUT_NICKNAME,
-                              phone: data.ZUT_PHONE,
-                              userDesc : data.UserDes,
-                              wechat: data.IsBindWeChat,
-                              qq: data.IsBindQQ,
-                              linkedin: data.IsBindLinkedIn,
+                              avatar: data4.ZUT_HEADIMG,
+                              nickName: data4.ZUT_NICKNAME,
+                              phone: data4.ZUT_PHONE,
+                              userDesc : data4.UserDes,
+                              wechat: data4.IsBindWeChat,
+                              qq: data4.IsBindQQ,
+                              linkedin: data4.IsBindLinkedIn,
                             }
                             this.props.login(userid, userData);
                           }
