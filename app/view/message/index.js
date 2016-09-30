@@ -12,6 +12,10 @@ class Message extends Component{
       switch: false
     }
     this.loadMessage = this.loadMessage.bind(this);
+    this.goToComment = this.goToComment.bind(this);
+    this.goToArticle = this.goToArticle.bind(this);
+    this.markAsRead = this.markAsRead.bind(this);
+    this.clearOneMessage = this.clearOneMessage.bind(this);
   }
   componentDidMount(){
     this.loadMessage()
@@ -30,7 +34,8 @@ class Message extends Component{
       })
     }
   }
-  goToComment(id){
+  goToComment(id, uid){
+    this.markAsRead(uid);
     this.props.navigator.push({
       ident: 'showcommentlist',
       objid: id,
@@ -38,7 +43,8 @@ class Message extends Component{
       commentNum: 0,
     })
   }
-  goToArticle(id){
+  goToArticle(id, uid){
+    this.markAsRead(uid);
     getDiscoverPost(id,'',(err,data)=>{
       if(err){console.log(err)} else {
         let cover = data.PostosInfo.PostsFrontCover,
@@ -75,11 +81,9 @@ class Message extends Component{
       .done()
   }
   render(){
-    const { messages } = this.props;
     let messagesList;
-    console.log(this.props.unread);
-    if(messages.length > 0){
-      messagesList = messages.map((item, ii) => {
+    if(this.props.messages.length > 0){
+      messagesList = this.props.messages.map((item, ii) => {
         let isComment, toArticle;
         if(item.ZTMT_TITLE.match('评论')){
           isComment = true;
@@ -87,6 +91,7 @@ class Message extends Component{
         if(item.ZTMT_TITLE.match('精华') || item.ZTMT_TITLE.match('置顶') || item.ZTMT_TITLE.match('推荐')){
           toArticle = true;
         };
+        console.log(item.readed);
         if(!this.state.switch && item.readed == true){
           return null
         }
@@ -107,7 +112,7 @@ class Message extends Component{
                 isComment
                 ?  <TouchableOpacity
                       style={[styles.button, {borderRightWidth:2,borderRightColor:'white'}]}
-                      onPress={this.goToComment.bind(this, item.ZTMT_OBJECTID)}
+                      onPress={e => this.goToComment(item.ZTMT_OBJECTID, item.ZTMT_ID)}
                    >
                      <H2 style={{fontSize: 15}}>去看看</H2>
                    </TouchableOpacity>
@@ -117,7 +122,7 @@ class Message extends Component{
                 toArticle
                 ?  <TouchableOpacity
                       style={[styles.button, {borderRightWidth:2,borderRightColor:'white'}]}
-                      onPress={this.goToArticle.bind(this, item.ZTMT_OBJECTID)}
+                      onPress={e => this.goToArticle(item.ZTMT_OBJECTID, item.ZTMT_ID)}
                    >
                      <H2 style={{fontSize: 15}}>去看看</H2>
                    </TouchableOpacity>
@@ -127,13 +132,13 @@ class Message extends Component{
                 item.readed
                 ?   <TouchableOpacity
                       style={styles.button}
-                      onPress={this.clearOneMessage.bind(this, item.ZTMT_ID)}
+                      onPress={e => this.clearOneMessage(item.ZTMT_ID)}
                     >
                       <H2 style={{fontSize: 15}}>清除</H2>
                     </TouchableOpacity>
                 :   <TouchableOpacity
                       style={styles.button}
-                      onPress={this.markAsRead.bind(this, item.ZTMT_ID)}
+                      onPress={e => this.markAsRead(item.ZTMT_ID)}
                     >
                       <H2 style={{fontSize: 15}}>标为已读</H2>
                     </TouchableOpacity>

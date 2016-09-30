@@ -11,7 +11,10 @@ class Disconnect extends Component{
     return(
       <Cell style={[{backgroundColor: '#fff'}, this.props.style]}>
         <Text style={{marginBottom: 10, color: '#999'}}>
-          网络貌似开了点小差～
+          网络貌似开了点小差
+        </Text>
+        <Text style={{marginBottom: 10, color: '#999'}}>
+          重新连接网络来刷新~
         </Text>
       </Cell>
     )

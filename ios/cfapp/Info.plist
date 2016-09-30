@@ -21,7 +21,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.2</string>
+	<string>1.1.3</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -50,7 +50,7 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>CodePushDeploymentKey</key>
-	<string>eS6Q0mj1Ja3YbX4cmbuR2bnjGLgo4kHEGkX6Z</string>
+	<string>5sUZYN02Vz1fU-8pP3YJSrtHqcAQ4kHEGkX6Z</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>alipayshare</string>

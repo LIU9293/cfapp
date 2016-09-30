@@ -2,12 +2,14 @@ import React,{ Component } from 'react';
 import { View,Image, WebView, Text,StyleSheet,TouchableOpacity,StatusBar,PixelRatio,Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Comments from '../common/comment2';
+import { deleteAds } from 'helper';
 
 class LinkDetail extends Component{
   constructor(props){
     super(props);
   }
   render(){
+    console.log(deleteAds);
     let dataInfo = this.props.dataInfo
     return(
       <View style = {styles.container}>
@@ -34,7 +36,9 @@ class LinkDetail extends Component{
         </View>
         <WebView style = {styles.webView}
           javaScriptEnabled={true}
-          source={{uri: dataInfo.uri}}/>
+          source={{uri: dataInfo.uri}}
+          injectedJavaScript={deleteAds}
+        />
         <View style ={{width: Util.size.width,height:45,position:'absolute',bottom:0,zIndex:1,backgroundColor:"#fff"}}>
           <Comments objid = {dataInfo.objid} type = {0} commentNum = {this.props.commentNum || 0} navigator = {this.props.navigator}/>
         </View>
